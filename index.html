@@ -1,106 +1,398 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dr. Illapu Sankara Srinivasa Rao | Portfolio</title>
-    <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Dr. Illapu Sankara Srinivasa Rao — Portfolio</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#f6f8fb; --card:#ffffff; --muted:#6b7280; --accent1:#005fb8; --accent2:#00b3b3;
+  }
+  [data-theme="dark"]{
+    --bg:#0b1220; --card:#0f1724; --muted:#9ca3af; --accent1:#48a6ff; --accent2:#2dd4bf;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;background:var(--bg);color:var(--muted);}
+  a{color:inherit}
+  .container{max-width:1100px;margin:0 auto;padding:20px}
+
+  /* Header */
+  header{background:linear-gradient(135deg,var(--accent1),var(--accent2));color:white;padding:56px 16px;border-bottom-left-radius:18px;border-bottom-right-radius:18px}
+  .hero{display:flex;gap:20px;align-items:center;flex-direction:column;text-align:center}
+  .hero img{width:140px;height:140px;border-radius:50%;object-fit:cover;border:4px solid rgba(255,255,255,0.2);box-shadow:0 6px 20px rgba(0,0,0,0.15)}
+  .hero h1{margin:12px 0 6px;font-size:26px;line-height:1.05}
+  .hero p.lead{margin:0;opacity:0.95}
+  .hero .actions{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+  .btn{background:white;color:var(--accent1);padding:10px 16px;border-radius:10px;font-weight:600;text-decoration:none;box-shadow:0 6px 18px rgba(0,0,0,0.08)}
+  .btn.outline{background:transparent;border:1px solid rgba(255,255,255,0.18);color:white}
+  .theme-toggle{background:rgba(255,255,255,0.12);border-radius:999px;padding:8px 10px;color:white;border:none;cursor:pointer}
+
+  main{margin-top:28px}
+  .grid{display:grid;gap:24px}
+  /* About + Skills */
+  .card{background:var(--card);padding:20px;border-radius:12px;box-shadow:0 8px 30px rgba(9,30,66,0.06);color:inherit}
+  .about{display:grid;grid-template-columns:1fr;gap:18px;align-items:start}
+  .about .bio{color:var(--muted);text-align:justify;line-height:1.7;font-size:15px}
+  .skills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white;padding:8px 12px;border-radius:999px;font-size:14px}
+
+  /* Timeline */
+  .timeline{position:relative;padding:10px 0}
+  .timeline::before{content:"";position:absolute;left:50%;transform:translateX(-50%);width:4px;background:linear-gradient(180deg,var(--accent1),var(--accent2));top:0;bottom:0;border-radius:4px}
+  .tl-item{position:relative;width:calc(50% - 30px);padding:18px;background:var(--card);border-radius:10px;box-shadow:0 6px 20px rgba(2,6,23,0.06);margin:20px 0;opacity:0;transform:translateY(18px);transition:all .6s ease}
+  .tl-item.left{left:0;margin-right:auto}
+  .tl-item.right{margin-left:auto;left:auto}
+  .tl-item::after{content:"";position:absolute;width:16px;height:16px;border-radius:50%;background:var(--card);border:4px solid var(--accent1);top:22px}
+  .tl-item.left::after{right:-44px}
+  .tl-item.right::after{left:-44px}
+  .tl-date{font-weight:600;color:var(--accent1);font-size:13px;margin-bottom:6px}
+  .tl-title{font-weight:700;color:var(--muted);margin-bottom:6px}
+
+  /* Mobile: stack timeline items */
+  @media (max-width:800px){
+    .tl-item{width:100%}
+    .timeline::before{left:16px}
+    .tl-item::after{left:8px}
+    .tl-item{padding-left:48px}
+  }
+
+  /* Testimonials carousel */
+  .carousel{position:relative;overflow:hidden;border-radius:12px}
+  .slides{display:flex;transition:transform .5s ease}
+  .slide{min-width:100%;padding:24px;background:var(--card);color:var(--muted);display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+  .quote{font-style:italic;font-size:16px;line-height:1.6}
+  .who{font-weight:700;color:var(--accent1)}
+  .dots{display:flex;gap:8px;justify-content:center;margin-top:12px}
+  .dot{width:10px;height:10px;border-radius:50%;background:rgba(0,0,0,0.12);cursor:pointer}
+  .dot.active{background:var(--accent1)}
+
+  /* QR + footer */
+  .qr-card{text-align:center;padding:18px;border-radius:12px}
+  .qr-card img{width:170px;height:170px;border-radius:8px}
+  footer{margin-top:28px;padding:20px;text-align:center;color:var(--muted);font-size:14px}
+
+  /* utilities */
+  .flex{display:flex;gap:12px;align-items:center}
+  .stack{display:flex;flex-direction:column;gap:12px}
+  .muted{color:var(--muted)}
+  .show{opacity:1;transform:none}
+</style>
 </head>
 <body>
+
+<div id="page" class="page" data-theme="">
 <header>
-    <div class="container">
-        <h1>Dr. Illapu Sankara Srinivasa Rao</h1>
-        <p>Professor | GATE Trainer | Researcher | Innovator</p>
-        <a href="#contact" class="btn">Contact Me</a>
+  <div class="container hero">
+    <img id="profileImg" src="profile.jpg" alt="Profile photo">
+    <h1 id="name">Dr. Illapu Sankara Srinivasa Rao</h1>
+    <p class="lead" id="title">Professor | GATE Trainer | Researcher | Mentor</p>
+
+    <div class="actions">
+      <a id="resumeBtn" class="btn" href="resume.pdf" target="_blank" download>📄 Download Resume</a>
+      <a href="#contact" class="btn outline">✉️ Contact</a>
+      <button id="themeBtn" class="theme-toggle" aria-label="Toggle theme">🌙</button>
+      <button id="editBtn" class="theme-toggle" title="Edit content (admin)">✏️</button>
     </div>
+  </div>
 </header>
 
-<section id="about">
-    <div class="container">
-        <img src="profile.jpg" alt="Profile Photo" class="profile-img">
-        <h2>About Me</h2>
-        <p style="text-align: justify;">
-            Dr. Illapu Sankara Srinivasa Rao, widely known as Dr. ISSR, is a distinguished educator, researcher, mentor, and one of India’s most respected trainers in Computer Science and Engineering. With expertise across more than 40 subjects, including DBMS, Computer Networks, Operating Systems, Compiler Design, TOC, Distributed Systems, and Cybersecurity, he has shaped the academic and professional journeys of thousands of students across India.
+<main class="container">
+  <div class="grid" style="grid-template-columns:1fr;gap:20px">
+    <!-- About + Skills -->
+    <section class="card about">
+      <div class="stack">
+        <h2 style="margin:0;color:var(--accent1)">About</h2>
+        <p id="bio" class="bio">Loading biography...</p>
+      </div>
 
-Renowned for his dynamic teaching style, real-time examples, shortcuts, and conceptual clarity, Dr. ISSR has trained numerous top performers and single-digit rank holders in GATE examinations. His association with leading national coaching institutes such as Made Easy, Gate Forum, Engineers Circle, TIME, and Unacademy has earned him the reputation of a master trainer and a role model for aspiring engineers.
+      <div style="display:flex;gap:18px;flex-wrap:wrap;margin-top:6px;align-items:center">
+        <div style="min-width:220px">
+          <h3 style="margin:6px 0 8px;color:var(--accent1)">Quick Info</h3>
+          <p class="muted" id="location">Visakhapatnam, Andhra Pradesh</p>
+          <p class="muted">Email: <a id="email" href="mailto:issr.gate@gmail.com">issr.gate@gmail.com</a></p>
+        </div>
 
-Beyond teaching, he is an active researcher with multiple publications, patents, and technical contributions in Artificial Intelligence, Optimization, IoT, Sensor Networks, and Wireless Communication. He has guided students in hackathons, national innovation challenges, and technical competitions, with several teams winning at prestigious platforms including Smart India Hackathon.
+        <div style="flex:1">
+          <h3 style="margin:6px 0 8px;color:var(--accent1)">Skills & Expertise</h3>
+          <div id="skills" class="skills"></div>
+        </div>
+      </div>
+    </section>
 
-Currently pursuing his Post-Doctoral research, Dr. ISSR continues to contribute to the academic community through innovation, mentorship, and leadership. His dedication to student success and passion for teaching has earned him multiple recognitions, including the honor of "Outstanding Performer."
+    <!-- Timeline -->
+    <section class="card">
+      <h2 style="margin-top:0;color:var(--accent1)">Career Timeline</h2>
+      <div id="timeline" class="timeline" aria-label="Career timeline">
+        <!-- items injected by JS -->
+      </div>
+    </section>
 
-With a mission to inspire, educate, and empower, Dr. ISSR remains a symbol of academic excellence and professional integrity.
-        </p>
-    </div>
-</section>
+    <!-- Publications + Patents -->
+    <section class="card" style="display:grid;gap:14px">
+      <div>
+        <h2 style="margin:0;color:var(--accent1)">Publications</h2>
+        <ul id="publications" style="margin-top:10px;color:var(--muted);line-height:1.6"></ul>
+      </div>
+      <div>
+        <h2 style="margin:0;color:var(--accent1)">Patents</h2>
+        <ul id="patents" style="margin-top:10px;color:var(--muted);line-height:1.6"></ul>
+      </div>
+    </section>
 
-<section id="skills">
-    <div class="container">
-        <h2>Skills & Expertise</h2>
-        <ul>
-            <li style="text-align: justify;">⚡ DBMS, CN, OS, TOC, Compiler Design,Programming with C, Data Structures, OOPs through CPP, OOPs through JAVA, WSN,Cryptography, Cyber Security,Advanced Operating System, Advanced Computer Networks, Advanced DBMS</li>
-            <li>⚡ Research & Publication Guidance</li>
-            <li>⚡ GATE Training & Mentoring</li>
-            <li>⚡ Optimization Algorithms, IoT, Networks,VANET, WBAN</li>
-        </ul>
-    </div>
-</section>
+    <!-- Testimonials carousel -->
+    <section class="card">
+      <h2 style="margin-top:0;color:var(--accent1)">Testimonials</h2>
+      <div class="carousel" aria-roledescription="carousel">
+        <div id="slides" class="slides">
+          <!-- injected -->
+        </div>
+      </div>
+      <div class="dots" id="dots" role="tablist"></div>
+    </section>
 
-<section id="projects">
-    <div class="container">
-        <h2>Patents</h2>
-        <p style="text-align: justify;">⚡AI Based Device For Image Encryption And Decryption</p>
-          <p style="text-align: justify;">⚡AI Based Device for Brain Abnormality Detection</p>
-          <p style="text-align: justify;">⚡AI Based Healthcare Device For Early Disease Detection </p>
-          <p style="text-align: justify;">⚡AI device for business analytics</p>
-         <p style="text-align: justify;">⚡AI and cloud based public security camera</p>
-          <p style="text-align: justify;">⚡Automated Cardiovascular Risk Prediction Using Multimodal Fusion and Synthetic Minority Oversampling(SMOTE) in imbalance datasets</p>
-         <p style="text-align: justify;">⚡Artificial Neural Network-Based Secure Authentication System for Communication Networks</p>
-        
-    </div>
-        <div class="container">
-        <h2>Publications</h2>
-        <p style="text-align: justify;">⚡Energy Aware Clustering and Routing using Cauchy Operator based Gorilla Troops Optimization for WBAN-Q1-Elsevier</p>
-           <p style="text-align: justify;">⚡Multiobjective-energy centric honey badger optimization based routing for wireless body area network-Q2-JIFS</p>
-          <p style="text-align: justify;">⚡Energy Efficient Optimal Parent Selection with Chameleon Swarm Algorithm and Non-Overlapping Backoff Algorithm based Dynamic Slot Allocation in Wireless Body Area Network-Q2-Springer </p>
-           <p style="text-align: justify;">⚡6LoWPAN MAC Layer Parameters optimization using evolutionary algorithm based ANN topology in Wireless Body Area Networks-Q2-JIFS</p>
-           <p style="text-align: justify;">⚡An Efficient Chaos-LSA Integrated Game Theory Algorithm for a QoS Assured Delay Time Control Mechanism with a Unique Parent Selection Strategy for a 6LoWPAN Wireless Body Area Network-Q2-Springer</p>
-           <p style="text-align: justify;">⚡Machine learning based performance anomaly avoidance scheme for medical IoT applications-Q2-Scopus</p>
-            <p style="text-align: justify;">⚡Enhancing VANET Energy Efficiency with Gorilla Troops Optimization-Based Clustering and Routing: EACRGTO-IEEE Conference</p>
-               <p style="text-align: justify;">⚡RDTP: Reliable Delay Time Protocol with Duty- Cycle Optimization in 6LoWPAN-WBAN-Springer Nature</p>
-    </div>
-     </div>
-        <div class="container">
-        <h2>Text Books</h2>
-        <p style="text-align: justify;">⚡Data Science Demystified with Python, Foundations To Applications</p>
-           <p style="text-align: justify;">⚡Data Mining and Analytics</p>
-             <p style="text-align: justify;">⚡Data Structures Demistified With C: From First Principles To Expert Challenges</p>
-         
-    </div>
-</section>
+    <!-- QR visiting card -->
+    <section class="card qr-card" id="qrSection">
+      <h2 style="margin:0;color:var(--accent1)">Scan to Contact</h2>
+      <p class="muted">Scan to open website or save contact</p>
+      <div id="qrWrap" style="margin-top:12px">
+        <img id="qrImg" src="" alt="QR code linking to website">
+      </div>
+      <p style="margin-top:10px"><strong id="footerName">Dr. I.S.S.R</strong></p>
+    </section>
 
-<section id="contact">
-    <div class="container">
-        <h2>Contact</h2>
-        <p>Email: <strong>issr.gate@gmail.com</strong></p>
-        <p>Location: Visakhapatnam, Andhra Pradesh, India</p>
-        <p>Resume:<a href="resume.pdf" target="_blank">Download My Resume</a></p>
-    </div>
-</section>
+    <!-- Contact -->
+    <section id="contact" class="card">
+      <h2 style="margin-top:0;color:var(--accent1)">Contact</h2>
+      <p class="muted">Email: <a id="contactEmail" href="#">issr.gate@gmail.com</a></p>
+      <p class="muted">Location: <span id="contactLocation">Visakhapatnam, Andhra Pradesh</span></p>
+      <form id="contactForm" style="margin-top:12px;display:flex;flex-direction:column;gap:8px" onsubmit="return submitContact(event)">
+        <input name="name" placeholder="Your name" required style="padding:10px;border-radius:8px;border:1px solid #e5e7eb">
+        <input name="email" type="email" placeholder="Your email" required style="padding:10px;border-radius:8px;border:1px solid #e5e7eb">
+        <textarea name="message" rows="4" placeholder="Message" required style="padding:10px;border-radius:8px;border:1px solid #e5e7eb"></textarea>
+        <div style="display:flex;gap:10px">
+          <button class="btn" type="submit">Send (mailto)</button>
+          <a id="downloadVcard" class="btn outline" href="#" download="Dr_ISSR_vcard.vcf">Download vCard</a>
+        </div>
+      </form>
+    </section>
+
+  </div>
+</main>
 
 <footer>
-    <p>© 2025 Dr. Illapu Sankara Srinivasa Rao. All Rights Reserved.</p>
+  <div class="container muted">© <span id="year"></span> <span id="nameFooter">Dr. Illapu Sankara Srinivasa Rao</span>. All Rights Reserved.</div>
 </footer>
 
-<script src="script.js"></script>
+<!-- Edit modal (simple) -->
+<div id="editorModal" style="display:none;position:fixed;inset:0;background:rgba(2,6,23,0.6);align-items:center;justify-content:center;padding:20px;z-index:60">
+  <div style="max-width:900px;width:100%;background:var(--card);padding:18px;border-radius:12px">
+    <h3 style="margin:0 0 8px;color:var(--accent1)">Edit site content (admin)</h3>
+    <textarea id="editorArea" style="width:100%;height:360px;padding:12px;border-radius:8px;border:1px solid #e5e7eb;font-family:monospace"></textarea>
+    <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:12px">
+      <button onclick="closeEditor()" class="btn outline">Cancel</button>
+      <button onclick="saveEditor()" class="btn">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* -------------------------
+   Editable content object
+   Edit values here or use the Admin editor (password "admin")
+--------------------------*/
+const DEFAULT_CONTENT = {
+  name: "Dr. Illapu Sankara Srinivasa Rao",
+  title: "Professor | GATE Trainer | Researcher | Mentor",
+  bio: `Dr. Illapu Sankara Srinivasa Rao, widely known as Dr. ISSR, is a distinguished educator, researcher, mentor, and one of India’s most respected trainers in Computer Science and Engineering. With expertise across 40+ subjects, he has trained thousands of students and guided many to top GATE ranks.`,
+  location: "Visakhapatnam, Andhra Pradesh, India",
+  email: "issr.gate@gmail.com",
+  website: "https://issr1977-coder.github.io/Dr.issr/",
+  profileImage: "profile.jpg",
+  resume: "resume.pdf",
+  skills: [
+    "DBMS, Computer Networks, Operating Systems",
+    "Compiler Design, Theory of Computation",
+    "GATE Coaching & Exam Strategy",
+    "IoT, Optimization Algorithms, VANET, WBAN",
+    "Java, C/C++, Python"
+  ],
+  timeline: [
+    {date:"2008", title:"Started Teaching & GATE Coaching", desc:"Began career as a faculty and GATE trainer."},
+    {date:"2015", title:"Mentored Top GATE Rankers", desc:"Coached many students who achieved top national ranks."},
+    {date:"2019", title:"Research & Publications", desc:"Published in Elsevier, Springer and IEEE conferences."},
+    {date:"2022", title:"Hackathon Mentor & Judge", desc:"Guided teams to national hackathon wins."},
+    {date:"2025", title:"Post-Doctoral Research", desc:"Currently pursuing postdoctoral research and advanced projects."}
+  ],
+  publications: [
+    "Energy aware clustering and routing using Cauchy operator based GTO for WBAN — Elsevier (Q1, 2025)",
+    "Multiobjective honey badger optimization based routing for WBAN — JIFS (Q2)",
+    "6LoWPAN MAC parameters optimization using evolutionary algorithms — JIFS"
+  ],
+  patents: [
+    "AI Based Device For Image Encryption And Decryption",
+    "AI Based Device For Brain Abnormality Detection",
+    "AI Based Healthcare Device For Early Disease Detection"
+  ],
+  testimonials: [
+    {quote:"The best teacher and motivator — turns the toughest subjects into enjoyable learning.", who:"— Former Student"},
+    {quote:"Clarity, shortcuts & real-time examples make his sessions exceptional.", who:"— GATE Aspirant"},
+    {quote:"A mentor with real passion for student success.", who:"— Faculty Peer"}
+  ]
+};
+
+/* ---------- Utilities & state ---------- */
+const LS_KEY = "issr_site_v2";
+let CONTENT = JSON.parse(localStorage.getItem(LS_KEY) || "null") || DEFAULT_CONTENT;
+
+/* ---------- Render functions ---------- */
+function renderAll(){
+  document.getElementById("name").textContent = CONTENT.name;
+  document.getElementById("nameFooter").textContent = CONTENT.name;
+  document.getElementById("title").textContent = CONTENT.title;
+  document.getElementById("bio").textContent = CONTENT.bio;
+  document.getElementById("location").textContent = CONTENT.location;
+  document.getElementById("contactLocation").textContent = CONTENT.location;
+  document.getElementById("contactEmail").href = "mailto:" + CONTENT.email;
+  document.getElementById("contactEmail").textContent = CONTENT.email;
+  document.getElementById("profileImg").src = CONTENT.profileImage;
+  document.getElementById("resumeBtn").href = CONTENT.resume;
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  // Skills
+  const skillsWrap = document.getElementById("skills");
+  skillsWrap.innerHTML = "";
+  CONTENT.skills.forEach(s=>{
+    const el = document.createElement("span");
+    el.className = "pill";
+    el.textContent = s;
+    skillsWrap.appendChild(el);
+  });
+
+  // Timeline
+  const tl = document.getElementById("timeline");
+  tl.innerHTML = "";
+  CONTENT.timeline.forEach((it, idx)=>{
+    const item = document.createElement("div");
+    item.className = "tl-item " + (idx%2===0 ? "left":"right");
+    item.style.animationDelay = (0.12*idx) + "s";
+    item.innerHTML = `<div class="tl-date">${it.date}</div><div class="tl-title">${it.title}</div><div class="muted">${it.desc || ""}</div>`;
+    tl.appendChild(item);
+    // reveal on scroll
+    setTimeout(()=> item.classList.add("show"), 100 + idx*80);
+  });
+
+  // Publications & patents
+  const pub = document.getElementById("publications"); pub.innerHTML="";
+  CONTENT.publications.forEach(p=>{ const li=document.createElement("li"); li.textContent=p; pub.appendChild(li);});
+  const pat = document.getElementById("patents"); pat.innerHTML="";
+  CONTENT.patents.forEach(p=>{ const li=document.createElement("li"); li.textContent=p; pat.appendChild(li);});
+
+  // Testimonials carousel
+  const slides = document.getElementById("slides"); slides.innerHTML="";
+  const dots = document.getElementById("dots"); dots.innerHTML="";
+  CONTENT.testimonials.forEach((t,i)=>{
+    const s = document.createElement("div"); s.className="slide"; s.innerHTML=`<div class="quote">“${t.quote}”</div><div class="who">${t.who}</div>`; slides.appendChild(s);
+    const d = document.createElement("button"); d.className="dot"; d.setAttribute("aria-label","Show testimonial "+(i+1));
+    d.onclick = ()=> goToSlide(i);
+    dots.appendChild(d);
+  });
+  startCarousel();
+
+  // QR code (uses qrserver)
+  const qr = document.getElementById("qrImg");
+  qr.src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(CONTENT.website)}`;
+  document.getElementById("footerName").textContent = CONTENT.name;
+  document.getElementById("downloadVcard").href = createVCardURL();
+}
+
+/* ---------- Carousel logic ---------- */
+let carouselIndex = 0, carouselTimer = null;
+function startCarousel(){
+  const slides = document.getElementById("slides");
+  const dots = document.getElementById("dots").children;
+  function show(i){
+    carouselIndex = (i + CONTENT.testimonials.length) % CONTENT.testimonials.length;
+    slides.style.transform = `translateX(-${carouselIndex*100}%)`;
+    Array.from(dots).forEach((d,idx)=> d.classList.toggle("active", idx===carouselIndex));
+  }
+  function next(){ show(carouselIndex+1); }
+  if(carouselTimer) clearInterval(carouselTimer);
+  show(0);
+  carouselTimer = setInterval(next, 4500);
+}
+function goToSlide(i){ startCarousel(); carouselIndex = i; const slides = document.getElementById("slides"); slides.style.transform = `translateX(-${i*100}%)`; }
+
+/* ---------- Contact form (mailto) ---------- */
+function submitContact(e){
+  e.preventDefault();
+  const fm = e.target;
+  const name = fm.name.value.trim(), em = fm.email.value.trim(), msg = fm.message.value.trim();
+  const subject = `Website Contact: ${name}`;
+  const body = `From: ${name} (${em})%0A%0A${encodeURIComponent(msg)}`;
+  window.location.href = `mailto:${encodeURIComponent(CONTENT.email)}?subject=${encodeURIComponent(subject)}&body=${body}`;
+  return false;
+}
+
+/* ---------- vCard generator (data URL) ---------- */
+function createVCardURL(){
+  const vcf = [
+    "BEGIN:VCARD",
+    "VERSION:3.0",
+    `FN:${CONTENT.name}`,
+    `ORG:Personal`,
+    `TITLE:${CONTENT.title}`,
+    `EMAIL;TYPE=INTERNET:${CONTENT.email}`,
+    `URL:${CONTENT.website}`,
+    `ADR:;;${CONTENT.location};;;;`,
+    "END:VCARD"].join("\n");
+  return "data:text/vcard;charset=utf-8," + encodeURIComponent(vcf);
+}
+
+/* ---------- Theme toggle (persist) ---------- */
+const root = document.getElementById("page");
+const themeBtn = document.getElementById("themeBtn");
+function applyTheme(t){
+  root.setAttribute("data-theme", t);
+  localStorage.setItem("issr_theme", t);
+  themeBtn.textContent = t === "dark" ? "☀️" : "🌙";
+}
+const savedTheme = localStorage.getItem("issr_theme") || "light";
+applyTheme(savedTheme);
+themeBtn.addEventListener("click", ()=> applyTheme(root.getAttribute("data-theme")==="dark" ? "light":"dark"));
+
+/* ---------- Admin editor ---------- */
+const editorModal = document.getElementById("editorModal");
+const editorArea = document.getElementById("editorArea");
+document.getElementById("editBtn").addEventListener("click", ()=>{
+  const pwd = prompt("Enter admin password to edit content:");
+  if(pwd === "admin"){
+    editorArea.value = JSON.stringify(CONTENT, null, 2);
+    editorModal.style.display = "flex";
+  } else if (pwd !== null) alert("Wrong password");
+});
+function closeEditor(){ editorModal.style.display = "none"; }
+function saveEditor(){
+  try{
+    const parsed = JSON.parse(editorArea.value);
+    CONTENT = parsed;
+    localStorage.setItem(LS_KEY, JSON.stringify(CONTENT));
+    renderAll();
+    closeEditor();
+    alert("Content saved locally. To persist to server, update the source files in your repository.");
+  }catch(err){ alert("JSON parse error: " + err.message); }
+}
+
+/* ---------- Init ---------- */
+document.getElementById("year").textContent = new Date().getFullYear();
+renderAll();
+
+/* ensure carousel pauses on hover */
+document.querySelector('.carousel').addEventListener('mouseenter', ()=> clearInterval(carouselTimer));
+document.querySelector('.carousel').addEventListener('mouseleave', ()=> startCarousel());
+
+</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
