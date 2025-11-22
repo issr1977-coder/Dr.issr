@@ -1,63 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dr. I.S.S.R | Portfolio</title>
-  
-  <!-- Tailwind CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dr. Illapu Sankara Srinivasa Rao | Portfolio</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
-
-<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-  <header class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white py-10">
-    <div class="container mx-auto text-center">
-      <img id="profileImage" src="" class="mx-auto w-32 h-32 rounded-full border-4 shadow-lg object-cover" />
-      <h1 id="name" class="text-3xl font-bold mt-4"></h1>
-      <p id="title" class="text-xl opacity-90 mt-2"></p>
-
-      <button id="toggleTheme" class="mt-4 px-3 py-2 bg-white bg-opacity-20 rounded-lg">
-        🌙/☀️ Toggle Theme
-      </button>
-
-      <button id="editBtn" class="mt-4 ml-2 px-3 py-2 border border-white rounded-lg">
-        ✏️ Edit
-      </button>
+<body>
+<header>
+    <div class="container">
+        <h1>Dr. Illapu Sankara Srinivasa Rao</h1>
+        <p>Professor | GATE Trainer | Researcher | Innovator</p>
+        <a href="#contact" class="btn">Contact Me</a>
     </div>
-  </header>
+</header>
 
-  <main class="container mx-auto px-6 mt-10">
-    <section class="p-6 rounded-xl bg-gray-100 dark:bg-gray-800 shadow-lg">
-      <h2 class="text-2xl font-bold">About</h2>
-      <p id="bio" class="mt-4 text-lg"></p>
-    </section>
+<section id="about">
+    <div class="container">
+        <img src="profile.jpg" alt="Profile Photo" class="profile-img">
+        <h2>About Me</h2>
+        <p>
+            I am a dedicated educator with expertise in DBMS, Computer Networks, OS, and 40+ Computer Science specializations. Known for simplifying complex topics, creating exceptional GATE results, and mentoring students for national hackathons and research innovations.
+        </p>
+    </div>
+</section>
 
-    <section class="mt-8 p-6 rounded-xl bg-gray-100 dark:bg-gray-800 shadow-lg">
-      <h2 class="text-2xl font-bold">Skills</h2>
-      <ul id="skills" class="mt-4 space-y-2 list-disc pl-6"></ul>
-    </section>
+<section id="skills">
+    <div class="container">
+        <h2>Skills & Expertise</h2>
+        <ul>
+            <li>⚡ DBMS, CN, OS, TOC, Compiler Design</li>
+            <li>⚡ Java, Python, C, Research & Publication Guidance</li>
+            <li>⚡ GATE Training & Mentoring</li>
+            <li>⚡ Optimization Algorithms, IoT, Networks</li>
+        </ul>
+    </div>
+</section>
 
-    <section class="mt-8 p-6 rounded-xl bg-gray-100 dark:bg-gray-800 shadow-lg">
-      <h2 class="text-2xl font-bold">Publications</h2>
-      <ul id="publications" class="mt-4 space-y-2 list-disc pl-6"></ul>
-    </section>
+<section id="projects">
+    <div class="container">
+        <h2>Publications & Projects</h2>
+        <p>Coming soon...</p>
+    </div>
+</section>
 
-    <section class="mt-8 p-6 rounded-xl bg-gray-100 dark:bg-gray-800 shadow-lg">
-      <h2 class="text-2xl font-bold">Contact</h2>
-      <p class="mt-4">📍 <span id="location"></span></p>
-      <p>📩 Email: <a id="email" href="#" class="underline"></a></p>
-      <p>🌐 Website: <a id="website" href="#" class="underline"></a></p>
-      <a id="resume" class="mt-4 inline-block bg-blue-600 text-white py-2 px-4 rounded-lg">Download Resume</a>
-    </section>
+<section id="contact">
+    <div class="container">
+        <h2>Contact</h2>
+        <p>Email: <strong>issr.gate@gmail.com</strong></p>
+        <p>Location: Visakhapatnam, Andhra Pradesh, India</p>
+    </div>
+</section>
 
-  </main>
+<footer>
+    <p>© 2025 Dr. Illapu Sankara Srinivasa Rao. All Rights Reserved.</p>
+</footer>
 
-  <footer class="mt-10 py-6 text-center opacity-70">
-    © <span id="year"></span> <span id="footerName"></span>. All Rights Reserved.
-  </footer>
-
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
