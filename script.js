@@ -1,1 +1,0 @@
-console.log("Personal website loaded successfully!");
