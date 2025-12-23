@@ -170,7 +170,7 @@ footer{
     <p class="lead" id="title">Professor | GATE Trainer | Researcher | Mentor</p>
 
     <div class="actions">
-      <a id="resumeBtn" class="btn" href="/mnt/data/index.html" target="_blank" download>📄 Download Resume</a>
+      <a id="resumeBtn" class="btn" href="resume.pdf" target="_blank" download>📄 Download Resume</a>
       <a href="gallery.html" class="btn outline"> 🖼️ Gallery</a>
        <a href="#projects" class="btn outline"> 🛠️ Projects</a>
       <a href="#contact" class="btn outline">✉️ Contact</a>
@@ -372,7 +372,7 @@ He is also a prolific researcher and trainer, having contributed to journals, pa
   email: "issr.gate@gmail.com",
   website: "https://issr1977-coder.github.io/Dr.issr/",
   profileImage: "profile.jpg",
-  resume: "/mnt/data/index.html",  // points to uploaded file path
+  resume: "resume.pdf",  // points to uploaded file path
 
   researchInterests: [
   "WSN,VANET,WBAN,6LoWPAN,IOT,CN", "DBMS,ADVANCED DBMS", "OS & ADVANCED OS","AI, ML, DL","Edge Computing","Crytography and Cyber Security","Optimisation Algorithms"
@@ -484,7 +484,7 @@ function renderAll(){
   document.getElementById("contactEmail").href = "mailto:" + CONTENT.email;
   document.getElementById("contactEmail").textContent = CONTENT.email;
   document.getElementById("profileImg").src = CONTENT.profileImage || "profile.jpg";
-  document.getElementById("resumeBtn").href = CONTENT.resume || "/mnt/data/index.html";
+  document.getElementById("resumeBtn").href = CONTENT.resume || "resume.pdf";
   document.getElementById("year").textContent = new Date().getFullYear();
   document.getElementById("edu1").textContent = "🎓 " + (CONTENT.edu1 || "Ph.D in Computer Science and Engineering — Vel Tech Rangarajan Dr.Sagunthala R&D Institute of Science & Technology");
   document.getElementById("edu2").textContent = "🎓 " + (CONTENT.edu2 || "M.Tech in Information Technology — GITAM University ");
@@ -646,3 +646,4 @@ document.querySelector('.carousel').addEventListener('mouseleave', ()=> startCar
 </script>
 </body>
 </html>
+
