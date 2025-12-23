@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery – Dr. Illapu Sankara Srinivasa Rao</title>
+
+<style>
+:root {
+  --accent: #0078ff;
+  --dark: #111;
+  --muted: #666;
+  --bg: #f5f7fa;
+}
+
+/* Page Styling */
+body {
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  padding: 25px;
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* Header */
+h1 {
+  text-align: center;
+  color: var(--accent);
+  margin-bottom: 5px;
+}
+
+/* Filter Buttons */
+.filters {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.filters button {
+  background: white;
+  border: 1px solid #ccc;
+  padding: 8px 18px;
+  margin: 5px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.filters button.active,
+.filters button:hover {
+  background: var(--accent);
+  color: white;
+}
+
+/* Masonry Grid */
+.gallery-grid {
+  column-count: 3;
+  column-gap: 18px;
+}
+
+@media(max-width:900px){ .gallery-grid { column-count: 2; } }
+@media(max-width:600px){ .gallery-grid { column-count: 1; } }
+
+.gallery-item {
+  break-inside: avoid;
+  margin-bottom: 16px;
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.gallery-item img {
+  width: 100%;
+  display: block;
+  transition: .3s;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.07);
+  filter: brightness(0.9);
+}
+
+/* Lightbox */
+#lightbox {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,.9);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+#lightbox img {
+  max-width: 92%;
+  max-height: 92%;
+  border-radius: 10px;
+  animation: zoom .3s ease;
+}
+
+@keyframes zoom {
+  from { transform: scale(.6); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+/* Lightbox Controls */
+#closeBtn {
+  position: absolute;
+  top: 20px;
+  right: 35px;
+  color: white;
+  font-size: 40px;
+  cursor: pointer;
+}
+
+#prevBtn, #nextBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 45px;
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+  user-select: none;
+}
+
+#prevBtn { left: 30px; }
+#nextBtn { right: 30px; }
+
+#slideBtn {
+  position: absolute;
+  bottom: 30px;
+  background: white;
+  padding: 8px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.back-btn {
+  margin-top: 20px;
+  display: inline-block;
+  padding: 10px 18px;
+  background: var(--accent);
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+}
+img {
+    width: 250px;
+    height: 250px;
+    object-fit: contain;
+    object-position: center center;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 5px;
+    display: block;
+    margin: auto;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>Gallery</h1>
+  <p style="text-align:center;color:var(--muted)">Click images to enlarge • Slideshow available</p>
+
+  <!-- FILTER BUTTONS -->
+  <div class="filters">
+    <button onclick="filterImages('all')" class="active">All</button>
+    <button onclick="filterImages('events')">Events</button>
+    <button onclick="filterImages('awards')">Awards</button>
+    <button onclick="filterImages('teaching')">Teaching</button>
+    <button onclick="filterImages('campus')">Campus</button>
+  </div>
+
+  <!-- GALLERY GRID -->
+  <div class="gallery-grid" id="galleryGrid"></div>
+
+  <!-- BACK BUTTON -->
+  <center>
+    <a href="index.html" class="back-btn">← Back to Home</a>
+  </center>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <span id="closeBtn">&times;</span>
+  <span id="prevBtn">&#10094;</span>
+  <img id="lightboxImg" src="">
+  <span id="nextBtn">&#10095;</span>
+  <div id="slideBtn" onclick="toggleSlide()">Start Slideshow</div>
+</div>
+
+<script>
+/* --------------------------------
+   GALLERY IMAGE LIST
+----------------------------------- */
+let GALLERY = [
+  { src: "gallery/img1.jpg", cat: "events" },
+  { src: "gallery/img2.jpg", cat: "awards" },
+  { src: "gallery/img3.jpg", cat: "teaching" },
+  { src: "gallery/img4.jpg", cat: "campus" },
+  { src: "gallery/img5.jpg", cat: "events" },
+  { src: "gallery/img6.jpg", cat: "teaching" }
+];
+
+// Render function
+function loadGallery(list) {
+  const grid = document.getElementById("galleryGrid");
+  grid.innerHTML = "";
+  list.forEach((img, i) => {
+    const div = document.createElement("div");
+    div.className = "gallery-item";
+    div.innerHTML = `<img src="${img.src}" data-index="${i}">`;
+    div.onclick = () => openLightbox(i);
+    grid.appendChild(div);
+  });
+}
+
+loadGallery(GALLERY);
+
+/* --------------------------------
+     FILTER FUNCTION
+----------------------------------- */
+function filterImages(cat) {
+  document.querySelectorAll(".filters button")
+          .forEach(btn => btn.classList.remove("active"));
+  event.target.classList.add("active");
+
+  if (cat === "all") loadGallery(GALLERY);
+  else loadGallery(GALLERY.filter(x => x.cat === cat));
+}
+
+/* --------------------------------
+     LIGHTBOX + SLIDESHOW
+----------------------------------- */
+let currentIndex = 0;
+let slideshowInterval = null;
+
+function openLightbox(index) {
+  currentIndex = index;
+  document.getElementById("lightboxImg").src = GALLERY[index].src;
+  document.getElementById("lightbox").style.display = "flex";
+}
+
+document.getElementById("closeBtn").onclick = closeLightbox;
+function closeLightbox() {
+  document.getElementById("lightbox").style.display = "none";
+  stopSlide();
+}
+
+document.getElementById("prevBtn").onclick = () => changeImg(-1);
+document.getElementById("nextBtn").onclick = () => changeImg(1);
+
+function changeImg(step) {
+  currentIndex = (currentIndex + step + GALLERY.length) % GALLERY.length;
+  openLightbox(currentIndex);
+}
+
+function toggleSlide() {
+  if (slideshowInterval === null) startSlide();
+  else stopSlide();
+}
+
+function startSlide() {
+  slideshowInterval = setInterval(() => changeImg(1), 2000);
+  document.getElementById("slideBtn").innerText = "Stop Slideshow";
+}
+
+function stopSlide() {
+  clearInterval(slideshowInterval);
+  slideshowInterval = null;
+  document.getElementById("slideBtn").innerText = "Start Slideshow";
+}
+</script>
+
+</body>
+</html>
