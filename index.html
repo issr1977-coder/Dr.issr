@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Dr. Illapu Sankara Srinivasa Rao — Portfolio</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f8fb; --card:#ffffff; --muted:#6b7280; --accent1:#005fb8; --accent2:#00b3b3;
+  }
+  [data-theme="dark"]{
+    --bg:#0b1220; --card:#0f1724; --muted:#9ca3af; --accent1:#48a6ff; --accent2:#2dd4bf;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;background:var(--bg);color:var(--muted);}
+  a{color:inherit;text-decoration:none;}
+  .container{max-width:1100px;margin:0 auto;padding:20px}
+
+  /* Header */
+  header{background:linear-gradient(135deg,var(--accent1),var(--accent2));color:white;padding:56px 16px;border-bottom-left-radius:18px;border-bottom-right-radius:18px}
+  .hero{display:flex;gap:20px;align-items:center;flex-direction:column;text-align:center}
+  .hero img{width:140px;height:140px;border-radius:50%;object-fit:cover;border:4px solid rgba(255,255,255,0.2);box-shadow:0 6px 20px rgba(0,0,0,0.15)}
+  .hero h1{margin:12px 0 6px;font-size:26px;line-height:1.05}
+  .hero p.lead{margin:0;opacity:0.95}
+  .hero .actions{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+  .btn{background:white;color:var(--accent1);padding:10px 16px;border-radius:10px;font-weight:600;text-decoration:none;box-shadow:0 6px 18px rgba(0,0,0,0.08)}
+  .btn.small{padding:8px 12px;font-size:14px}
+  .btn.outline{background:transparent;border:1px solid rgba(255,255,255,0.18);color:white}
+  .theme-toggle{background:rgba(255,255,255,0.12);border-radius:999px;padding:8px 10px;color:white;border:none;cursor:pointer}
+  .whatsapp-fab{position:fixed;right:18px;bottom:18px;background:#25D366;color:white;border-radius:999px;padding:12px 14px;font-size:20px;box-shadow:0 8px 24px rgba(37,211,102,0.18);z-index:90;text-decoration:none}
+
+  /* Cards & layout */
+  main{margin-top:28px}
+  .grid{display:grid;gap:24px}
+  .card{background:var(--card);padding:20px;border-radius:12px;box-shadow:0 8px 30px rgba(9,30,66,0.06);color:inherit}
+  .about .bio{color:var(--muted);text-align:justify;line-height:1.7;font-size:15px}
+  .pill{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white;padding:8px 12px;border-radius:999px;font-size:14px}
+  .skills{display:flex;flex-wrap:wrap;gap:10px}
+
+  /* Timeline (Professional Experience) */
+  .timeline{position:relative;padding:10px 0;margin-top:12px}
+  .timeline::before{content:"";position:absolute;left:20px;width:4px;background:linear-gradient(180deg,var(--accent1),var(--accent2));top:0;bottom:0;border-radius:4px}
+  .tl-item{position:relative;margin-left:48px;padding:12px 14px;border-radius:8px;background:linear-gradient(180deg,#fff,#fff);box-shadow:0 6px 18px rgba(2,6,23,0.04);margin-bottom:14px}
+  .tl-date{font-weight:600;color:var(--accent1);font-size:13px}
+  .tl-title{font-weight:700;color:var(--muted);margin-top:6px}
+
+  /* Lists */
+  ul{list-style:none;padding:0;margin:0}
+  ul li{margin:8px 0;color:var(--muted)}
+
+  /* Publications */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  @media (max-width:900px){ .two-col{grid-template-columns:1fr} }
+
+
+#publications ul li,
+
+
+  /* Testimonials carousel */
+  .carousel{position:relative;overflow:hidden;border-radius:12px}
+  .slides{display:flex;transition:transform .5s ease}
+  .slide{min-width:100%;padding:24px;background:var(--card);color:var(--muted);display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+  .quote{font-style:italic;font-size:16px;line-height:1.6}
+  .who{font-weight:700;color:var(--accent1)}
+  .dots{display:flex;gap:8px;justify-content:center;margin-top:12px}
+  .dot{width:10px;height:10px;border-radius:50%;background:rgba(0,0,0,0.12);cursor:pointer}
+  .dot.active{background:var(--accent1)}
+
+  /* Footer & social */
+ /* footer{margin-top:28px;padding:22px 16px;text-align:center;color:var(--muted);font-size:14px}
+ footer{
+  margin-top:28px;
+  padding:22px 16px;
+  text-align:center;
+  color:#fff;
+  background:linear-gradient(135deg,var(--accent1),var(--accent2));
+  font-size:14px;
+  border-top-left-radius:18px;
+  border-top-right-radius:18px;
+}*/
+/* Footer + Social Icons */
+footer{
+  margin-top:28px;
+  padding:22px 16px;
+  text-align:center;
+  color:#fff;
+  background:linear-gradient(135deg,var(--accent1),var(--accent2));
+  font-size:14px;
+  border-top-left-radius:18px;
+  border-top-right-radius:18px;
+}
+
+/* Social Icons Styling */
+/* Scholar badge style (white like icons) */
+.badges a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:44px;
+  height:44px;
+  border-radius:10px;
+  background:rgba(255,255,255,0.2);
+  transition:all 0.3s ease;
+}
+
+.badges a:hover{
+  transform:translateY(-4px) scale(1.1);
+  background:rgba(255,255,255,0.35);
+  box-shadow:0px 4px 12px rgba(0,0,0,0.18);
+}
+
+.badges a svg{
+  transition:fill 0.3s ease;
+}
+
+.badges a:hover svg{
+  fill:#fff;
+}
+
+
+.social-icons{
+  display:flex;
+  justify-content:center;
+  gap:18px;
+  margin-bottom:12px;
+}
+
+.social-icons a{
+  font-size:20px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:44px;
+  height:44px;
+  border-radius:10px;
+  background:rgba(255,255,255,0.2);
+  color:#fff;
+  transition:all 0.3s ease;
+}
+
+/* 🚀 Hover Animation */
+.social-icons a:hover{
+  transform:translateY(-4px) scale(1.1);
+  background:rgba(255,255,255,0.35);
+  box-shadow:0px 4px 12px rgba(0,0,0,0.18);
+}
+
+  .social-icons{display:flex;justify-content:center;gap:18px;margin-bottom:12px}
+  .social-icons a{font-size:20px;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:10px;background:rgba(0,0,0,0.04)}
+  .social-icons a:hover{transform:translateY(-3px)}
+  .badges{display:flex;gap:8px;justify-content:center;align-items:center;margin-bottom:10px}
+
+  /* YouTube grid */
+  .videos{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media (max-width:800px){ .videos{grid-template-columns:1fr} }
+
+  .muted{color:var(--muted)}
+  .stack{display:flex;flex-direction:column;gap:12px}
+</style>
+</head>
+<body>
+
+<div id="page" data-theme="">
+<header>
+  <div class="container hero">
+    <img id="profileImg" src="profile.jpg" alt="Profile photo">
+    <h1 id="name">Dr. Illapu Sankara Srinivasa Rao</h1>
+    <p class="lead" id="title">Professor | GATE Trainer | Researcher | Mentor</p>
+
+    <div class="actions">
+      <a id="resumeBtn" class="btn" href="/mnt/data/index.html" target="_blank" download>📄 Download Resume</a>
+      <a href="gallery.html" class="btn outline"> 🖼️ Gallery</a>
+       <a href="#projects" class="btn outline"> 🛠️ Projects</a>
+      <a href="#contact" class="btn outline">✉️ Contact</a>
+      
+      <button id="themeBtn" class="theme-toggle" aria-label="Toggle theme">🌙</button>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <div class="grid">
+
+    <!-- About + Education + Research Interests -->
+    <section class="card about">
+      <div class="stack">
+        <h2 style="margin:0;color:var(--accent1)">About</h2>
+        <p id="bio" class="bio">WSN, DBMS, VANET, WBAN, Machine Learning, Deep Learning, Edge Computing</p>
+      </div>
+
+      <div class="stack" style="margin-top:12px">
+        <h3 style="margin:0;color:var(--accent1)">Education</h3>
+        <p id="edu1" class="muted">🎓 Ph.D in Computer Science and Engineering — Vel Tech Rangarajan Dr.Sagunthala R&D Institute of Science and Technology (2024)</p>
+        <p id="edu2" class="muted">🎓 M.Tech in Information Technology — GITAM University (2004)</p>
+        <p id="edu3" class="muted">🎓 MCA — Madurai Kamaraj University (2001)</p>
+        
+      </div>
+
+     <!----> <div class="stack" style="margin-top:12px">
+        <h3 style="margin:0;color:var(--accent1)">Research Interests</h3>
+        <div id="research" class="skills"></div>
+         
+      </div>
+         <br>
+      <div style="margin-top:12px">
+        <h3 style="margin:6px 0 8px;color:var(--accent1)">Skills & Expertise</h3>
+        <div id="skills" class="skills"></div>
+      </div>
+    </section>
+
+    <!-- GATE Courses & GATE CTA -->
+    <section class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <h2 style="margin:0;color:var(--accent1)">GATE Courses / Coaching</h2>
+        <a id="joinGateBtn" class="btn small" href="#contact">Enquire / Join</a>
+      </div>
+      <p class="muted" id="gateSubjects" style="margin-top:10px"></p>
+    </section>
+
+    <!-- Professional Experience (timeline) -->
+    <section class="card">
+      <h2 style="margin:0 0 8px;color:var(--accent1)">Professional Experience</h2>
+      <div class="timeline" id="experience">
+        <!-- timeline items injected -->
+      </div>
+    </section>
+
+     <!-- SCI Publications -->
+    <section class="card">
+      <div>
+        <h2 style="margin:0;color:var(--accent1)">SCI Publications</h2>
+        <ul id="scipub" style="margin-top:10px;color:var(--muted);line-height:1.6"></ul>
+      </div>
+      
+    </section>
+    <!-- Scopus Indexed Publications -->
+    <section class="card">
+      <div>
+        <h2 style="margin:0;color:var(--accent1)">Scopus Indexed Publications</h2>
+        <ul id="ScopusIndexed" style="margin-top:10px;color:var(--muted);line-height:1.6"></ul>
+      </div>
+      
+    </section>
+    <!-- Conference Publications -->
+       <section class="card">
+      <div>
+        <h2 style="margin:0;color:var(--accent1)">Conference Publications</h2>
+        <ul id="confpub" style="margin-top:10px;color:var(--muted);line-height:1.6"></ul>
+      </div>
+      </section>  
+       <!-- Patents -->
+<section class="card">
+         <div>
+        <h2 style="margin:0;color:var(--accent1)">Patents</h2>
+        <ul id="patents" style="margin-top:10px;color:var(--muted);line-height:1.6"></ul>
+      </div>
+    </section>
+    <!-- Textbooks -->  
+    <section class="card">
+      <div>
+        <h2 style="margin:0;color:var(--accent1)">Textbooks</h2>
+        <ul id="textbooks" style="margin-top:10px;color:var(--muted);line-height:1.6"></ul>
+      </div>
+    </section>
+    <!-- Research Projects -->
+    <section class="card">
+      <h2 style="margin:0;color:var(--accent1)">Research Projects</h2>
+      <ul id="projects" style="margin-top:10px;color:var(--muted);line-height:1.6"></ul>
+    </section>
+
+    <!-- Awards & Achievements -->
+    <section class="card">
+      <h2 style="margin:0;color:var(--accent1)">Awards & Achievements</h2>
+      <ul id="awards" style="margin-top:10px;color:var(--muted);line-height:1.6"></ul>
+    </section>
+<!-- Certifications -->
+<section class="card">
+  <h2 style="margin:0;color:var(--accent1)">Certifications</h2>
+  <ul id="certifications" style="margin-top:10px;color:var(--muted);line-height:1.6"></ul>
+</section>
+
+    <!-- Student Success / Rankers -->
+    <section class="card">
+      <h2 style="margin:0;color:var(--accent1)">Student Success & Rankers</h2>
+      <ul id="rankers" style="margin-top:10px;color:var(--muted);line-height:1.6"></ul>
+    </section>
+
+    <!-- YouTube Embedded Videos -->
+    <section class="card">
+      <h2 style="margin:0;color:var(--accent1)">Selected Lectures / Videos</h2>
+      <div class="videos" id="videoGrid" style="margin-top:12px">
+        <!-- iframes injected -->
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="card">
+      <h2 style="margin-top:0;color:var(--accent1)">Testimonials</h2>
+      <div class="carousel">
+        <div id="slides" class="slides"></div>
+      </div>
+      <div class="dots" id="dots"></div>
+    </section>
+
+    <!-- QR visiting card -->
+    <section class="card qr-card" id="qrSection">
+      <h2 style="margin:0;color:var(--accent1)">Scan to Contact</h2>
+      <p class="muted">Scan to open website or save contact</p>
+      <div id="qrWrap" style="margin-top:12px">
+        <img id="qrImg" src="" alt="QR code linking to website">
+      </div>
+      <p style="margin-top:10px"><strong id="footerName">Dr. I.S.S.R</strong></p>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="card">
+      <h2 style="margin-top:0;color:var(--accent1)">Contact</h2>
+      <p class="muted">📧 Email: <a id="contactEmail" href="#">issr.gate@gmail.com</a></p>
+      <p class="muted">📍 Location: <span id="contactLocation">Visakhapatnam, Andhra Pradesh</span></p>
+      <form id="contactForm" style="margin-top:12px;display:flex;flex-direction:column;gap:8px" onsubmit="return submitContact(event)">
+        <input name="name" placeholder="Your name" required style="padding:10px;border-radius:8px;border:1px solid #e5e7eb">
+        <input name="email" type="email" placeholder="Your email" required style="padding:10px;border-radius:8px;border:1px solid #e5e7eb">
+        <textarea name="message" rows="4" placeholder="Message" required style="padding:10px;border-radius:8px;border:1px solid #e5e7eb"></textarea>
+        <div style="display:flex;gap:10px">
+          <button class="btn" type="submit">Send (mailto)</button>
+          <a id="downloadVcard" class="btn outline" href="#" download="Dr_ISSR_vcard.vcf">Download vCard</a>
+        </div>
+      </form>
+    </section>
+
+  </div>
+</main>
+
+<!-- Floating WhatsApp button (opens chat) -->
+<a id="waBtn" class="whatsapp-fab" href="#" target="_blank" aria-label="Chat on WhatsApp">💬</a>
+
+<!-- Footer with Social Icons + Scholar badge -->
+<footer>
+  <div class="badges">
+  <a id="scholarBadge" href="https://scholar.google.com" target="_blank" title="Google Scholar">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff">
+      <path d="M12 2L1 9l11 7 11-7-11-7zm0 
+      20c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+    </svg>
+  </a>
+</div>
+
+  <div class="social-icons">
+    <a id="lnkLinkedin" href="https://www.linkedin.com" target="_blank" title="LinkedIn">in</a>
+    <a id="lnkYouTube" href="https://www.youtube.com" target="_blank" title="YouTube">▶</a>
+    <a id="lnkScholar" href="https://scholar.google.com" target="_blank" title="Google Scholar">G</a>
+    <a id="lnkRG" href="https://www.researchgate.net" target="_blank" title="ResearchGate">RG</a>
+    <a id="lnkGit" href="https://github.com" target="_blank" title="GitHub">GH</a>
+  </div>
+  © <span id="year"></span> <span id="nameFooter">Dr. Illapu Sankara Srinivasa Rao</span> — All Rights Reserved.
+</footer>
+
+<script>
+/* -------------------------
+   DEFAULT CONTENT (editable)
+   Change values here to update site content.
+--------------------------*/
+const DEFAULT_CONTENT = {
+  name: "Dr. Illapu Sankara Srinivasa Rao",
+  title: "Professor | GATE Trainer | Researcher | Mentor",
+  bio: `Dr. Illapu Sankara Srinivasa Rao (ISR) is a renowned Computer Science educator and mentor from Visakhapatnam, India. With decades of experience, he has guided thousands of students in competitive exams like GATE, hackathons, and technical projects. Known for his innovative teaching methods, real-world examples, and problem-solving tricks, Dr. ISR makes complex subjects like OS, DBMS, CN, C Programming, DS, CPP, TOC, Compiler Design, Sensor Networks, IoT, simple and engaging.
+
+He is also a prolific researcher and trainer, having contributed to journals, patents, and cutting-edge optimization algorithms. His students consider him a role model and inspiration for academic and professional excellence.`,
+  location: "Visakhapatnam, Andhra Pradesh, India",
+  email: "issr.gate@gmail.com",
+  website: "https://issr1977-coder.github.io/Dr.issr/",
+  profileImage: "profile.jpg",
+  resume: "/mnt/data/index.html",  // points to uploaded file path
+
+  researchInterests: [
+  "WSN,VANET,WBAN,6LoWPAN,IOT,CN", "DBMS,ADVANCED DBMS", "OS & ADVANCED OS","AI, ML, DL","Edge Computing","Crytography and Cyber Security","Optimisation Algorithms"
+],
+  skills: [
+    "DBMS, Computer Networks, Operating Systems",
+    "Compiler Design, Theory of Computation",
+    "GATE Coaching & Exam Strategy",
+    "IoT, Optimization Algorithms, VANET, WBAN",
+    "Java, C/C++, Python"
+  ],
+  gateSubjects: "DBMS, Computer Networks, Operating Systems, Compiler Design, Theory of Computation, Algorithms, Data Structures",
+  experience: [
+  {date:"2025 - Present", title:"Associate Professor — CSE(Data Science) Department-Anil Neerukonda Institute of Technology and Sciences", desc:"Taught core CSE courses and supervised UG projects."},
+ {date:"2023 - 2025", title:"Adjunct Professor — CS & SE Department-Andhra University", desc:"Taught core CSE courses and supervised UG projects."},
+   {date:"2017 - 2023", title:"Dean-Academics — CSE Department- Chaitanya Engineering College", desc:"Taught core CSE courses and supervised UG projects."},
+   {date:"2023 - Present", title:"GATE Trainer — Self/Institute", desc:"GATE coaching, mentoring, and content creation for aspirants."},
+  ],
+  
+  scipub: [
+    
+    "1.Energy aware clustering and routing using Cauchy operator based GTO for WBAN(2025) — Computers and Electrical Engineering-Elsevier (Q1)",
+    "2.Multiobjective honey badger optimization based routing for WBAN(2024) — JIFS (Q2)",
+    "3.Energy Efficient Optimal Parent Selection with Chameleon Swarm Algorithm and Non-Overlapping Backoff Algorithm based Dynamic Slot Allocation in Wireless Body Area Network(2024)-Wireless Network-@Springer(Q2)",
+    "4.6LoWPAN MAC parameters optimization using evolutionary algorithms(2023) — JIFS(Q2)",
+    "5.An Efficient Chaos-LSA Integrated Game Theory Algorithm for a QoS Assured Delay Time Control Mechanism with a Unique Parent Selection Strategy for a 6LoWPAN Wireless Body Area Network(2023)-Appliednanoscience — Springer (Q2))",
+    
+  ],
+   ScopusIndexed: [
+   
+      "1.Machine learning based performance anomaly avoidance scheme for medical IoT applications(2022)-JATIT(Q4)"
+  ],
+   confpub: [
+   
+      "1.Enhancing VANET Energy Efficiency with Gorilla Troops Optimization-Based Clustering and Routing: EACR-GTO(IEEE Conference-2025)",
+      "2. RDTP: Reliable Delay Time Protocol with Duty- Cycle Optimization in 6LoWPAN-WBAN(Springer Conference-2025)",
+  ],
+  patents: [
+    "1. AI Based Device For Image Encryption And Decryption",
+    "2. AI Based Device For Brain Abnormality Detection",
+    "3. AI Based Healthcare Device For Early Disease Detection",
+    "4. AI device for business analytics",
+    "5. AI and cloud based public security camera",
+    "6. Automated Cardiovascular Risk Prediction Using Multimodal Fusion and Synthetic Minority Oversampling(SMOTE) in imbalance datasets",
+    "7. Artificial Neural Network-Based Secure Authentication System for Communication Networks",
+  ],
+    textbooks: [
+      "1.Data Science Demystified with Python, Foundations To Applications",
+      "2.Data Mining and Analytics",
+      "3.Data Structures Demistified With C: From First Principles To Expert Challenges",
+  
+  ],
+  projects: [
+    "1. AI-based Healthcare Prediction System — Ongoing (Institution-funded)",
+    "2. Optimization-based Energy Routing in WBAN — Completed"
+  ],
+  awards: [
+    "1. Best Teacher Award — 2022 (Institute)",
+    "2. Mentored National Hackathon Winning Teams — 2023",
+    "3. Recognized as Top GATE CSE Mentor (India) — 2024",
+    "4.SWAYAM-NPTEL Online Certification in Operating System , Topper in batch",
+    "5.SWAYAM-NPTEL Online Certification in Operating System , Gold Badge",
+    "5.Received Best Paper Award in International Conference on Applications of Computational Intelligence in Management and Mathematics I(ICCM 2023)",  
+  ],
+    certifications: [
+    "1.Microsoft Certifications in Networking & System Administration(MCP)",
+    "2.Certified in Microsoft Exchange Server",
+    "3.NPTEL-Data Base Management",
+    "4.NPTEL-Operating System , topper in batch",
+    "5.NPTEL-Problem Solving Through Programming in C",
+    "6.NPTEL-Outcome Based Education, Silver Badge",
+    "7.NPTEL-JPP, Gold Badge",
+
+  ],
+
+  rankers: [
+    "AIR 52 — 2023",
+    "AIR 132 — 2021",
+    "AIR 88 — 2019"
+  ],
+  testimonials: [
+    {quote:"The best teacher and motivator — turns the toughest subjects into enjoyable learning.", who:"— Former Student"},
+    {quote:"Clarity, shortcuts & real-time examples make his sessions exceptional.", who:"— GATE Aspirant"},
+    {quote:"A mentor with real passion for student success.", who:"— Faculty Peer"}
+  ],
+  videos: [
+    // sample youtube IDs; replace with your channel IDs if available
+    "dQw4w9WgXcQ",
+    "9bZkp7q19f0"
+  ],
+  scholar: {
+    profile: "https://scholar.google.com/", // replace with real profile
+    badgeText: "Google Scholar"
+  },
+  whatsapp: "+91 90000 00000" // replace with your number if desired
+};
+
+/* ---------- App State ---------- */
+const LS_KEY="issr_site_v3";
+let CONTENT = JSON.parse(localStorage.getItem(LS_KEY) || "null") || DEFAULT_CONTENT;
+
+/* ---------- Render ---------- */
+function renderAll(){
+  document.getElementById("name").textContent = CONTENT.name;
+  document.getElementById("nameFooter").textContent = CONTENT.name;
+  document.getElementById("title").textContent = CONTENT.title;
+  document.getElementById("bio").textContent = CONTENT.bio;
+  document.getElementById("contactLocation").textContent = CONTENT.location;
+  document.getElementById("contactEmail").href = "mailto:" + CONTENT.email;
+  document.getElementById("contactEmail").textContent = CONTENT.email;
+  document.getElementById("profileImg").src = CONTENT.profileImage || "profile.jpg";
+  document.getElementById("resumeBtn").href = CONTENT.resume || "/mnt/data/index.html";
+  document.getElementById("year").textContent = new Date().getFullYear();
+  document.getElementById("edu1").textContent = "🎓 " + (CONTENT.edu1 || "Ph.D in Computer Science and Engineering — Vel Tech Rangarajan Dr.Sagunthala R&D Institute of Science & Technology");
+  document.getElementById("edu2").textContent = "🎓 " + (CONTENT.edu2 || "M.Tech in Information Technology — GITAM University ");
+  document.getElementById("edu3").textContent = "🎓 " + (CONTENT.edu3 || "MCA — Madurai Kamaraj University ");
+    
+  
+
+  // Research Interests
+  const researchWrap=document.getElementById("research"); researchWrap.innerHTML="";    
+  CONTENT.researchInterests.forEach(r=>{const el=document.createElement("span");el.className="pill";el.textContent=r;researchWrap.appendChild(el)});  
+  // Skills
+  const skillsWrap=document.getElementById("skills"); skillsWrap.innerHTML="";
+  CONTENT.skills.forEach(s=>{const el=document.createElement("span");el.className="pill";el.textContent=s;skillsWrap.appendChild(el)});
+
+  // GATE subjects
+  document.getElementById("gateSubjects").textContent = CONTENT.gateSubjects;
+
+  // Experience timeline
+  const expWrap = document.getElementById("experience"); expWrap.innerHTML="";
+  CONTENT.experience.forEach(it=>{
+    const div = document.createElement("div"); div.className="tl-item";
+    div.innerHTML = `<div class="tl-date">${it.date}</div><div class="tl-title">${it.title}</div><div class="muted">${it.desc || ""}</div>`;
+    expWrap.appendChild(div);
+  });
+
+  // Publications & patents
+  const scipub=document.getElementById("scipub"); scipub.innerHTML=""; CONTENT.scipub.forEach(p=>{const li=document.createElement("li");li.textContent=p;scipub.appendChild(li)});
+
+  const scopub=document.getElementById("ScopusIndexed"); scopub.innerHTML=""; CONTENT.ScopusIndexed.forEach(p=>{const li=document.createElement("li");li.textContent=p;scopub.appendChild(li)});
+const confpub=document.getElementById("confpub"); confpub.innerHTML=""; CONTENT.confpub.forEach(p=>{const li=document.createElement("li");li.textContent=p;confpub.appendChild(li)});
+
+  const pat=document.getElementById("patents"); pat.innerHTML=""; CONTENT.patents.forEach(p=>{const li=document.createElement("li");li.textContent=p;pat.appendChild(li)});
+ const textbooks=document.getElementById("textbooks"); textbooks.innerHTML=""; CONTENT.textbooks.forEach(p=>{const li=document.createElement("li");li.textContent=p;textbooks.appendChild(li)});
+
+  // Projects
+  const proj=document.getElementById("projects"); proj.innerHTML=""; CONTENT.projects.forEach(p=>{const li=document.createElement("li");li.textContent=p;proj.appendChild(li)});
+
+  // Awards
+  const aw=document.getElementById("awards"); aw.innerHTML=""; CONTENT.awards.forEach(a=>{const li=document.createElement("li");li.textContent=a;aw.appendChild(li)});
+  // Certifications
+  const cert = document.getElementById("certifications"); cert.innerHTML="";
+  CONTENT.certifications.forEach(c=>{
+    const li=document.createElement("li"); li.textContent=c;
+    cert.appendChild(li);
+  });
+
+  // Rankers
+  const rk=document.getElementById("rankers"); rk.innerHTML=""; CONTENT.rankers.forEach(r=>{const li=document.createElement("li");li.textContent=r;rk.appendChild(li)});
+
+  // Testimonials carousel
+  const slides=document.getElementById("slides"); slides.innerHTML="";
+  const dots=document.getElementById("dots"); dots.innerHTML="";
+  CONTENT.testimonials.forEach((t,i)=>{const s=document.createElement("div");s.className="slide";s.innerHTML=`<div class="quote">“${t.quote}”</div><div class="who">${t.who}</div>`;slides.appendChild(s);const d=document.createElement("button");d.className="dot";d.onclick=()=> goToSlide(i);dots.appendChild(d)});
+  startCarousel();
+
+  // QR code
+  document.getElementById("qrImg").src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(CONTENT.website)}`;
+
+  // Videos
+  const vgrid = document.getElementById("videoGrid"); vgrid.innerHTML="";
+  CONTENT.videos.forEach(id=>{
+    const wrap = document.createElement("div");
+    wrap.innerHTML = `<iframe width="100%" height="220" src="https://www.youtube.com/embed/${id}" title="YouTube video" frameborder="0" allowfullscreen></iframe>`;
+    vgrid.appendChild(wrap);
+  });
+
+  // Social icons links (footer)
+  document.getElementById("lnkLinkedin").href = CONTENT.linkedin || "https://www.linkedin.com";
+  document.getElementById("lnkYouTube").href = CONTENT.youtube || "https://www.youtube.com";
+  document.getElementById("lnkScholar").href = CONTENT.scholar.profile || "https://scholar.google.com";
+  document.getElementById("lnkRG").href = CONTENT.researchgate || "https://www.researchgate.net";
+  document.getElementById("lnkGit").href = CONTENT.github || "https://github.com";
+
+  // Scholar badge (simple)
+  const bwrap = document.getElementById("scholarBadges"); bwrap.innerHTML = "";
+  const s = document.createElement("a"); s.href = CONTENT.scholar.profile; s.target="_blank"; s.className="muted"; s.style.padding="6px 10px"; s.style.borderRadius="8px"; s.style.background="rgba(0,0,0,0.04)"; s.textContent = CONTENT.scholar.badgeText || "Google Scholar";
+  bwrap.appendChild(s);
+
+  // WhatsApp button
+  const wa = document.getElementById("waBtn");
+  const raw = (CONTENT.whatsapp||"").replace(/\s+/g,'');
+  if(raw && raw !== "NotAvailable" && raw !== "Not Available"){
+    // format for wa.me
+    const num = raw.startsWith("+") ? raw.replace(/\+/g,'') : raw.replace(/\D/g,'');
+    wa.href = `https://wa.me/${num}?text=${encodeURIComponent("Hello Dr. ISSR, I would like to enquire about your courses.")}`;
+    wa.style.display = "inline-flex";
+  } else {
+    wa.style.display = "none";
+  }
+
+  // vCard download
+  document.getElementById("downloadVcard").href = createVCardURL();
+}
+
+/* ---------- Carousel logic ---------- */
+let carouselIndex = 0, carouselTimer = null;
+function startCarousel(){
+  const slides = document.getElementById("slides");
+  const dots = document.getElementById("dots").children;
+  function show(i){
+    carouselIndex = (i + CONTENT.testimonials.length) % CONTENT.testimonials.length;
+    slides.style.transform = `translateX(-${carouselIndex*100}%)`;
+    Array.from(dots).forEach((d,idx)=> d.classList.toggle("active", idx===carouselIndex));
+  }
+  function next(){ show(carouselIndex+1); }
+  if(carouselTimer) clearInterval(carouselTimer);
+  if(!CONTENT.testimonials.length) return;
+  show(0);
+  carouselTimer = setInterval(next, 4500);
+}
+function goToSlide(i){ startCarousel(); carouselIndex = i; const slides = document.getElementById("slides"); slides.style.transform = `translateX(-${i*100}%)`; }
+
+/* ---------- Contact form (mailto) ---------- */
+function submitContact(e){
+  e.preventDefault();
+  const fm = e.target;
+  const name = fm.name.value.trim(), em = fm.email.value.trim(), msg = fm.message.value.trim();
+  const subject = `Website Contact: ${name}`;
+  const body = `From: ${name} (${em})%0A%0A${encodeURIComponent(msg)}`;
+  window.location.href = `mailto:${encodeURIComponent(CONTENT.email)}?subject=${encodeURIComponent(subject)}&body=${body}`;
+  return false;
+}
+
+/* ---------- vCard generator (data URL) ---------- */
+function createVCardURL(){
+  const vcf = [
+    "BEGIN:VCARD",
+    "VERSION:3.0",
+    `FN:${CONTENT.name}`,
+    `ORG:Personal`,
+    `TITLE:${CONTENT.title}`,
+    `EMAIL;TYPE=INTERNET:${CONTENT.email}`,
+    `URL:${CONTENT.website}`,
+    `ADR:;;${CONTENT.location};;;;`,
+    "END:VCARD"].join("\n");
+  return "data:text/vcard;charset=utf-8," + encodeURIComponent(vcf);
+}
+
+/* ---------- Theme toggle (persist) ---------- */
+const root = document.getElementById("page");
+const themeBtn = document.getElementById("themeBtn");
+function applyTheme(t){
+  root.setAttribute("data-theme", t);
+  localStorage.setItem("issr_theme", t);
+  themeBtn.textContent = t === "dark" ? "☀️" : "🌙";
+}
+const savedTheme = localStorage.getItem("issr_theme") || "light";
+applyTheme(savedTheme);
+themeBtn.addEventListener("click", ()=> applyTheme(root.getAttribute("data-theme")==="dark" ? "light":"dark"));
+
+/* ---------- Init ---------- */
+renderAll();
+document.querySelector('.carousel').addEventListener('mouseenter', ()=> clearInterval(carouselTimer));
+document.querySelector('.carousel').addEventListener('mouseleave', ()=> startCarousel());
+
+/* Make content editable by changing localStorage (advanced users):
+   localStorage.setItem('issr_site_v3', JSON.stringify(CONTENT)); location.reload();
+*/
+</script>
+</body>
+</html>
