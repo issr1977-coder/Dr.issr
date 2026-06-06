@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery | Dr. Illapu Sankara Srinivasa Rao</title>
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --card: #ffffff;
+      --muted: #6b7280;
+      --accent1: #005fb8;
+      --accent2: #00b3b3;
+      --text: #374151;
+    }
+    
+    [data-theme="dark"] {
+      --bg: #0b1220;
+      --card: #0f1724;
+      --muted: #9ca3af;
+      --accent1: #48a6ff;
+      --accent2: #2dd4bf;
+      --text: #f3f4f6;
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.3s, color 0.3s;
+    }
+    
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    /* Header */
+    header {
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      color: white;
+      padding: 56px 16px;
+      border-bottom-left-radius: 18px;
+      border-bottom-right-radius: 18px;
+      text-align: center;
+    }
+    
+    header h1 {
+      margin: 0 0 10px;
+      font-size: 32px;
+      font-weight: 700;
+    }
+    
+    header p {
+      margin: 0;
+      opacity: 0.9;
+      font-size: 16px;
+    }
+    
+    .header-actions {
+      margin-top: 20px;
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .btn {
+      background: white;
+      color: var(--accent1);
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    }
+    
+    .theme-toggle {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      transition: background 0.3s;
+    }
+    
+    .theme-toggle:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+    
+    /* Filter Buttons */
+    .filters {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 32px 0 24px;
+    }
+    
+    .filters button {
+      background: var(--card);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      color: var(--muted);
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+    }
+    
+    [data-theme="dark"] .filters button {
+      border-color: rgba(255, 255, 255, 0.05);
+    }
+    
+    .filters button:hover,
+    .filters button.active {
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      color: white;
+      border-color: transparent;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 95, 184, 0.2);
+    }
+    
+    /* Grid Layout */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+    
+    .gallery-item {
+      position: relative;
+      background: var(--card);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+      cursor: pointer;
+      aspect-ratio: 4 / 3;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    
+    .gallery-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.1);
+    }
+    
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+    
+    .category-tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+      pointer-events: none;
+    }
+    
+    /* Lightbox */
+    #lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(11, 18, 32, 0.88);
+      backdrop-filter: blur(12px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    
+    #lightbox img {
+      max-width: 90%;
+      max-height: 80vh;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+      object-fit: contain;
+      animation: zoom 0.3s ease;
+    }
+    
+    @keyframes zoom {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    
+    #closeBtn {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      color: white;
+      font-size: 32px;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.1);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s;
+    }
+    
+    #closeBtn:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+    
+    #prevBtn, #nextBtn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 24px;
+      color: white;
+      cursor: pointer;
+      width: 48px;
+      height: 48px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      transition: background 0.3s, transform 0.2s;
+    }
+    
+    #prevBtn:hover, #nextBtn:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+    
+    #prevBtn:active, #nextBtn:active {
+      transform: translateY(-50%) scale(0.95);
+    }
+    
+    #prevBtn { left: 24px; }
+    #nextBtn { right: 24px; }
+    
+    #slideBtn {
+      position: absolute;
+      bottom: 40px;
+      background: white;
+      color: #0f1724;
+      padding: 12px 24px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s;
+    }
+    
+    #slideBtn:hover {
+      transform: scale(1.05);
+      background: #f3f4f6;
+    }
+    
+    @media(max-width: 768px) {
+      #prevBtn { left: 12px; }
+      #nextBtn { right: 12px; }
+      #closeBtn { top: 12px; right: 12px; }
+      header h1 { font-size: 26px; }
+      .gallery-grid {
+        gap: 16px;
+      }
+    }
+    
+    /* Footer */
+    footer {
+      margin-top: 48px;
+      padding: 32px 16px;
+      text-align: center;
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      font-size: 14px;
+      border-top-left-radius: 18px;
+      border-top-right-radius: 18px;
+    }
+    
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 12px;
+    }
+    
+    .social-icons a {
+      font-size: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+    
+    .social-icons a:hover {
+      transform: translateY(-4px) scale(1.1);
+      background: rgba(255, 255, 255, 0.35);
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.18);
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="page" data-theme="">
+  <header>
+    <div class="container">
+      <h1>Media Gallery</h1>
+      <p>Moments, Academic Events, Awards, and Campus Lectures</p>
+      
+      <div class="header-actions">
+        <a href="index.html" class="btn">← Back to Home</a>
+        <button id="themeBtn" class="theme-toggle" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- FILTER BUTTONS -->
+    <div class="filters">
+      <button onclick="filterImages('all', this)" class="active">All</button>
+      <button onclick="filterImages('events', this)">Events</button>
+      <button onclick="filterImages('awards', this)">Awards</button>
+      <button onclick="filterImages('teaching', this)">Teaching</button>
+      <button onclick="filterImages('campus', this)">Campus</button>
+    </div>
+
+    <!-- GALLERY GRID -->
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox">
+    <span id="closeBtn">&times;</span>
+    <span id="prevBtn">&#10094;</span>
+    <img id="lightboxImg" src="" alt="Enlarged gallery view">
+    <span id="nextBtn">&#10095;</span>
+    <div id="slideBtn" onclick="toggleSlide()">Start Slideshow</div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="social-icons">
+      <a href="https://www.linkedin.com" target="_blank" title="LinkedIn">in</a>
+      <a href="https://www.youtube.com" target="_blank" title="YouTube">▶</a>
+      <a href="https://scholar.google.com" target="_blank" title="Google Scholar">G</a>
+      <a href="https://www.researchgate.net" target="_blank" title="ResearchGate">RG</a>
+      <a href="https://github.com" target="_blank" title="GitHub">GH</a>
+    </div>
+    &copy; <span id="year"></span> Dr. Illapu Sankara Srinivasa Rao — All Rights Reserved.
+  </footer>
+</div>
+
+<script>
+  /* --------------------------------
+     GALLERY IMAGE LIST
+  ----------------------------------- */
+  const GALLERY = [
+    { src: "gallery/img1.jpg", cat: "events" },
+    { src: "gallery/img2.jpg", cat: "awards" },
+    { src: "gallery/img3.jpg", cat: "teaching" },
+    { src: "gallery/img4.jpg", cat: "campus" },
+    { src: "gallery/img5.jpg", cat: "events" },
+    { src: "gallery/img6.jpg", cat: "teaching" },
+    { src: "gallery/img7.jpg", cat: "events" },
+    { src: "gallery/img8.jpg", cat: "awards" },
+    { src: "gallery/img9.jpg", cat: "teaching" },
+    { src: "gallery/img10.jpg", cat: "campus" },
+    { src: "gallery/img11.jpg", cat: "events" },
+    { src: "gallery/img11.jpg", cat: "teaching" } // Note: index 11
+  ];
+
+  let activeList = [...GALLERY];
+  let currentIndex = 0;
+  let slideshowInterval = null;
+
+  // Render function
+  function loadGallery(list) {
+    activeList = list;
+    const grid = document.getElementById("galleryGrid");
+    grid.innerHTML = "";
+    list.forEach((img, idx) => {
+      const div = document.createElement("div");
+      div.className = "gallery-item";
+      
+      const categoryLabel = img.cat.charAt(0).toUpperCase() + img.cat.slice(1);
+      div.innerHTML = `
+        <img src="${img.src}" alt="${categoryLabel} photo" loading="lazy">
+        <span class="category-tag">${categoryLabel}</span>
+      `;
+      div.onclick = () => openLightbox(idx);
+      grid.appendChild(div);
+    });
+  }
+
+  // Initial load
+  loadGallery(GALLERY);
+
+  /* --------------------------------
+       FILTER FUNCTION
+  ----------------------------------- */
+  function filterImages(cat, btnElement) {
+    document.querySelectorAll(".filters button").forEach(btn => btn.classList.remove("active"));
+    btnElement.classList.add("active");
+
+    if (cat === "all") {
+      loadGallery(GALLERY);
+    } else {
+      loadGallery(GALLERY.filter(x => x.cat === cat));
+    }
+  }
+
+  /* --------------------------------
+       LIGHTBOX + SLIDESHOW
+  ----------------------------------- */
+  function openLightbox(index) {
+    if (activeList.length === 0) return;
+    currentIndex = index;
+    document.getElementById("lightboxImg").src = activeList[currentIndex].src;
+    document.getElementById("lightbox").style.display = "flex";
+  }
+
+  document.getElementById("closeBtn").onclick = closeLightbox;
+  
+  // Close when clicking outside of the image
+  document.getElementById("lightbox").onclick = function(e) {
+    if (e.target === this) {
+      closeLightbox();
+    }
+  };
+
+  function closeLightbox() {
+    document.getElementById("lightbox").style.display = "none";
+    stopSlide();
+  }
+
+  document.getElementById("prevBtn").onclick = (e) => {
+    e.stopPropagation();
+    changeImg(-1);
+  };
+  document.getElementById("nextBtn").onclick = (e) => {
+    e.stopPropagation();
+    changeImg(1);
+  };
+
+  function changeImg(step) {
+    if (activeList.length === 0) return;
+    currentIndex = (currentIndex + step + activeList.length) % activeList.length;
+    document.getElementById("lightboxImg").src = activeList[currentIndex].src;
+  }
+
+  function toggleSlide() {
+    if (slideshowInterval === null) startSlide();
+    else stopSlide();
+  }
+
+  function startSlide() {
+    slideshowInterval = setInterval(() => changeImg(1), 2500);
+    document.getElementById("slideBtn").innerText = "Stop Slideshow";
+  }
+
+  function stopSlide() {
+    clearInterval(slideshowInterval);
+    slideshowInterval = null;
+    document.getElementById("slideBtn").innerText = "Start Slideshow";
+  }
+
+  // Keyboard navigation support
+  document.addEventListener("keydown", (e) => {
+    const lightbox = document.getElementById("lightbox");
+    if (lightbox.style.display === "flex") {
+      if (e.key === "ArrowRight") changeImg(1);
+      if (e.key === "ArrowLeft") changeImg(-1);
+      if (e.key === "Escape") closeLightbox();
+    }
+  });
+
+  /* ---------- Theme toggle (persist) ---------- */
+  const root = document.documentElement;
+  const themeBtn = document.getElementById("themeBtn");
+  
+  function applyTheme(t) {
+    root.setAttribute("data-theme", t);
+    localStorage.setItem("issr_theme", t);
+    themeBtn.textContent = t === "dark" ? "☀️" : "🌙";
+  }
+  
+  const savedTheme = localStorage.getItem("issr_theme") || "light";
+  applyTheme(savedTheme);
+  
+  themeBtn.addEventListener("click", () => {
+    applyTheme(root.getAttribute("data-theme") === "dark" ? "light" : "dark");
+  });
+
+  // Footer Year
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
