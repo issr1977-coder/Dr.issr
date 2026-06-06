@@ -1,293 +1,902 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gallery – Dr. Illapu Sankara Srinivasa Rao</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Gallery | Dr. Illapu Sankara Srinivasa Rao</title>
+  <meta name="description" content="Photo gallery of Dr. Illapu Sankara Srinivasa Rao — Events, Awards, Teaching, and Campus moments.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
-<style>
-:root {
-  --accent: #0078ff;
-  --dark: #111;
-  --muted: #666;
-  --bg: #f5f7fa;
-}
+  <style>
+    /* ─── DESIGN TOKENS (matches reimagined.html) ─── */
+    :root {
+      --bg: #f0f4f8;
+      --surface: #ffffff;
+      --surface2: #f8fafc;
+      --border: rgba(0,0,0,0.06);
+      --text: #0f172a;
+      --muted: #64748b;
+      --subtle: #94a3b8;
+      --blue: #3b82f6;
+      --cyan: #06b6d4;
+      --grad: linear-gradient(135deg, #3b82f6, #06b6d4);
+      --glow: 0 8px 24px rgba(59,130,246,0.18);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    [data-theme="dark"] {
+      --bg: #070a12;
+      --surface: rgba(15,23,42,0.9);
+      --surface2: rgba(15,23,42,0.5);
+      --border: rgba(255,255,255,0.06);
+      --text: #f1f5f9;
+      --muted: #cbd5e1;
+      --subtle: #64748b;
+      --blue: #60a5fa;
+      --cyan: #22d3ee;
+      --grad: linear-gradient(135deg, #3b82f6, #14b8a6);
+    }
 
-/* Page Styling */
-body {
-  font-family: Arial, sans-serif;
-  background: var(--bg);
-  padding: 25px;
-}
+    /* ─── BASE ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--muted);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1,h2,h3 { font-family: 'Outfit', sans-serif; color: var(--text); font-weight: 700; }
+    a { color: inherit; text-decoration: none; }
 
-/* Container */
-.container {
-  max-width: 1200px;
-  margin: auto;
-}
+    /* ─── HERO HEADER ─── */
+    .hero {
+      background: var(--grad);
+      color: white;
+      padding: 48px 20px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: -40px;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      pointer-events: none;
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .back-btn {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: white;
+      font-size: 18px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: background .2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .back-btn:active { background: rgba(255,255,255,0.28); }
+    .hero-title { font-size: 22px; color: white; line-height: 1.2; }
+    .hero-sub { font-size: 12px; color: rgba(255,255,255,0.8); margin-top: 3px; font-weight: 400; }
+    .theme-btn {
+      position: absolute;
+      top: 16px; right: 16px;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      backdrop-filter: blur(8px);
+      z-index: 10;
+      transition: background .3s;
+    }
+    .theme-btn:hover { background: rgba(255,255,255,0.25); }
 
-/* Header */
-h1 {
-  text-align: center;
-  color: var(--accent);
-  margin-bottom: 5px;
-}
+    .badge {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: white;
+      padding: 5px 12px;
+      border-radius: 99px;
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
 
-/* Filter Buttons */
-.filters {
-  text-align: center;
-  margin: 20px 0;
-}
+    /* ─── FILTER CHIPS ─── */
+    .filters-wrap {
+      padding: 16px 12px 4px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .filters-wrap::-webkit-scrollbar { display: none; }
+    .filters {
+      display: flex;
+      gap: 8px;
+      width: max-content;
+      min-width: 100%;
+    }
+    .filter-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--subtle);
+      padding: 8px 16px;
+      border-radius: 99px;
+      font-size: 13px; font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      white-space: nowrap;
+      transition: all .2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .filter-btn.active {
+      background: var(--grad);
+      color: white;
+      border-color: transparent;
+      box-shadow: var(--glow);
+    }
+    .filter-btn:active { opacity: 0.8; }
 
-.filters button {
-  background: white;
-  border: 1px solid #ccc;
-  padding: 8px 18px;
-  margin: 5px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: .3s;
-}
+    /* ─── GALLERY GRID ─── */
+    .gallery-wrap {
+      padding: 12px 12px calc(var(--safe-bottom) + 24px);
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .gallery-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      position: relative;
+      cursor: pointer;
+      transition: transform .25s ease, box-shadow .25s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .gallery-item:active { transform: scale(0.96); }
+    .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .5s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.05); }
 
-.filters button.active,
-.filters button:hover {
-  background: var(--accent);
-  color: white;
-}
+    /* Span first item across both columns for visual interest */
+    .gallery-item:first-child {
+      grid-column: span 2;
+      aspect-ratio: 16/9;
+    }
 
-/* Masonry Grid */
-.gallery-grid {
-  column-count: 3;
-  column-gap: 18px;
-}
+    .cat-tag {
+      position: absolute;
+      top: 10px; left: 10px;
+      background: rgba(7,10,18,0.55);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 99px;
+      font-size: 10px; font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      pointer-events: none;
+    }
 
-@media(max-width:900px){ .gallery-grid { column-count: 2; } }
-@media(max-width:600px){ .gallery-grid { column-count: 1; } }
+    /* Overlay on hover (desktop) */
+    .item-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(7,10,18,0.55) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity .3s;
+      display: flex; align-items: flex-end;
+      padding: 12px;
+    }
+    .gallery-item:hover .item-overlay { opacity: 1; }
+    .overlay-expand {
+      color: white;
+      font-size: 20px;
+      margin-left: auto;
+      line-height: 1;
+    }
 
-.gallery-item {
-  break-inside: avoid;
-  margin-bottom: 16px;
-  border-radius: 14px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: .3s;
-}
+    /* Empty state */
+    .empty-state {
+      grid-column: span 2;
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--subtle);
+    }
+    .empty-state .empty-icon { font-size: 40px; margin-bottom: 10px; }
+    .empty-state p { font-size: 14px; }
 
-.gallery-item img {
-  width: 100%;
-  display: block;
-  transition: .3s;
-}
+    /* ─── COUNT BADGE ─── */
+    .count-badge {
+      font-size: 12px; color: var(--subtle);
+      padding: 0 12px 12px;
+      font-weight: 500;
+    }
 
-.gallery-item:hover img {
-  transform: scale(1.07);
-  filter: brightness(0.9);
-}
+    /* ─── LIGHTBOX ─── */
+    #lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(7,10,18,0.92);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      padding: 16px;
+    }
+    #lightbox.open { display: flex; }
+    #lightboxImg {
+      max-width: 100%;
+      max-height: 72vh;
+      border-radius: var(--radius);
+      object-fit: contain;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+      animation: lbZoom .3s cubic-bezier(.16,1,.3,1);
+    }
+    @keyframes lbZoom {
+      from { transform: scale(0.92); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
 
-/* Lightbox */
-#lightbox {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,.9);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
+    /* Lightbox controls row */
+    .lb-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .lb-btn {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: white;
+      font-size: 18px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: background .2s;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    .lb-btn:active { background: rgba(255,255,255,0.2); }
+    .lb-close {
+      position: absolute;
+      top: calc(env(safe-area-inset-top, 0px) + 16px);
+      right: 16px;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: white;
+      font-size: 20px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .lb-counter {
+      color: rgba(255,255,255,0.7);
+      font-size: 13px; font-weight: 600;
+      min-width: 60px;
+      text-align: center;
+    }
+    .lb-slide-btn {
+      background: white;
+      color: #0f172a;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 99px;
+      font-size: 13px; font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      margin-top: 12px;
+      transition: background .2s, transform .2s;
+    }
+    .lb-slide-btn:active { transform: scale(0.96); }
 
-#lightbox img {
-  max-width: 92%;
-  max-height: 92%;
-  border-radius: 10px;
-  animation: zoom .3s ease;
-}
+    /* Caption */
+    .lb-cat {
+      font-size: 11px;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+      margin-top: 10px;
+    }
 
-@keyframes zoom {
-  from { transform: scale(.6); opacity: 0; }
-  to   { transform: scale(1); opacity: 1; }
-}
+    /* ─── FOOTER ─── */
+    footer {
+      text-align: center;
+      padding: 20px 16px calc(var(--safe-bottom) + 20px);
+      font-size: 12px;
+      color: var(--subtle);
+      border-top: 1px solid var(--border);
+    }
 
-/* Lightbox Controls */
-#closeBtn {
-  position: absolute;
-  top: 20px;
-  right: 35px;
-  color: white;
-  font-size: 40px;
-  cursor: pointer;
-}
+    .desktop-sidebar { display: none; }
+    .desktop-main .sec-head { display: none; }
 
-#prevBtn, #nextBtn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 45px;
-  color: white;
-  cursor: pointer;
-  padding: 10px;
-  user-select: none;
-}
+    /* ─── DESKTOP ─── */
+    @media (min-width: 769px) {
+      .hero { display: none !important; }
+      .filters-wrap { display: none !important; }
+      footer { display: none !important; } /* Hide mobile footer, desktop footer is inside .desktop-main */
 
-#prevBtn { left: 30px; }
-#nextBtn { right: 30px; }
+      body {
+        background: var(--bg);
+      }
 
-#slideBtn {
-  position: absolute;
-  bottom: 30px;
-  background: white;
-  padding: 8px 20px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: bold;
-}
+      /* Desktop layout grid */
+      .desktop-grid {
+        display: grid;
+        grid-template-columns: 320px 1fr;
+        gap: 40px;
+        align-items: start;
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 40px 24px 60px;
+      }
 
-.back-btn {
-  margin-top: 20px;
-  display: inline-block;
-  padding: 10px 18px;
-  background: var(--accent);
-  color: white;
-  border-radius: 8px;
-  text-decoration: none;
-}
-img {
-    width: 250px;
-    height: 250px;
-    object-fit: contain;
-    object-position: center center;
-    background-color: #ffffff;
-    border-radius: 8px;
-    padding: 5px;
-    display: block;
-    margin: auto;
-}
+      .desktop-sidebar {
+        position: sticky;
+        top: 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
 
-</style>
+      .desktop-main {
+        min-width: 0;
+      }
+      
+      .desktop-main .sec-head {
+        display: flex !important;
+        padding: 0 0 10px !important;
+      }
+
+      /* Sidebar Card Styling (matches reimagined.html) */
+      .sidebar-card {
+        padding: 24px;
+        position: relative;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+      }
+
+      .sidebar-header {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .sidebar-avatar {
+        width: 110px;
+        height: 110px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid rgba(59, 130, 246, 0.15);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        margin-bottom: 14px;
+        transition: transform 0.3s;
+      }
+      .sidebar-avatar:hover {
+        transform: scale(1.04);
+      }
+
+      .sidebar-name {
+        font-size: 19px;
+        font-weight: 700;
+        color: var(--text);
+        line-height: 1.3;
+        margin-bottom: 6px;
+      }
+
+      .sidebar-role {
+        font-size: 12px;
+        color: var(--muted);
+        margin-bottom: 16px;
+        font-weight: 500;
+      }
+
+      .sidebar-badges {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .sidebar-badges .badge {
+        font-size: 10px;
+        padding: 4px 10px;
+        background: rgba(59, 130, 246, 0.08);
+        border: 1px solid rgba(59, 130, 246, 0.15);
+        color: var(--blue);
+      }
+      [data-theme="dark"] .sidebar-badges .badge {
+        background: rgba(96, 165, 250, 0.1);
+        border-color: rgba(96, 165, 250, 0.2);
+        color: var(--blue);
+      }
+
+      .sidebar-divider {
+        height: 1px;
+        background: var(--border);
+        margin: 20px 0;
+      }
+
+      /* Desktop Navigation */
+      .desktop-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .desktop-nav-item {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 16px;
+        border: none;
+        background: transparent;
+        color: var(--muted);
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        border-radius: var(--radius-sm);
+        transition: all 0.2s ease;
+        text-align: left;
+        width: 100%;
+      }
+      .desktop-nav-item:hover {
+        background: var(--surface2);
+        color: var(--text);
+        padding-left: 20px;
+      }
+      .desktop-nav-item.active {
+        background: rgba(59, 130, 246, 0.06);
+        color: var(--blue);
+      }
+      [data-theme="dark"] .desktop-nav-item.active {
+        background: rgba(96, 165, 250, 0.1);
+      }
+      .desktop-nav-item.active::before {
+        content: '';
+        position: absolute;
+        left: 0; top: 12px; bottom: 12px;
+        width: 4px;
+        background: var(--blue);
+        border-radius: 2px;
+      }
+      .desktop-nav-item .nav-icon {
+        font-size: 16px;
+      }
+
+      .btn {
+        display: inline-flex; align-items: center; justify-content: center;
+        gap: 8px;
+        padding: 10px 16px;
+        border-radius: var(--radius-sm);
+        font-size: 14px; font-weight: 600;
+        font-family: inherit;
+        cursor: pointer;
+        border: none;
+        transition: all .25s cubic-bezier(.16,1,.3,1);
+        text-align: center;
+      }
+      .btn-outline {
+        background: transparent;
+        border: 1.5px solid var(--border);
+        color: var(--text);
+      }
+      .btn-outline:active { transform: scale(0.97); }
+
+      .sidebar-theme-btn {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        color: var(--text);
+        font-size: 13px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s, transform 0.2s;
+        z-index: 15;
+      }
+      .sidebar-theme-btn:hover {
+        background: var(--border);
+        transform: scale(1.08);
+      }
+
+      /* Gallery Layout */
+      .gallery-wrap {
+        padding: 0 0 50px;
+      }
+      .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+      }
+      .gallery-item {
+        border-radius: var(--radius);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+      }
+      .gallery-item:first-child {
+        grid-column: span 2;
+        aspect-ratio: 16/7;
+      }
+      .count-badge {
+        padding: 0 0 16px;
+        font-size: 13px;
+      }
+      
+      /* Lightbox side arrows and presentation */
+      #lightboxImg {
+        max-width: 85%;
+        max-height: 78vh;
+      }
+      .lb-close {
+        top: 30px;
+        right: 30px;
+        width: 48px;
+        height: 48px;
+        font-size: 22px;
+        transition: background 0.2s, transform 0.2s;
+      }
+      .lb-close:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1.08);
+      }
+      #prevBtn {
+        position: absolute;
+        left: 40px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 56px;
+        height: 56px;
+        font-size: 24px;
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.12);
+        transition: background 0.2s, transform 0.2s;
+      }
+      #prevBtn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-50%) scale(1.08);
+      }
+      #nextBtn {
+        position: absolute;
+        right: 40px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 56px;
+        height: 56px;
+        font-size: 24px;
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.12);
+        transition: background 0.2s, transform 0.2s;
+      }
+      #nextBtn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-50%) scale(1.08);
+      }
+      .lb-controls {
+        margin-top: 20px;
+        gap: 20px;
+      }
+      .lb-slide-btn:hover {
+        background: #f8fafc;
+        transform: scale(1.04);
+      }
+
+      footer {
+        padding-top: 30px;
+        padding-bottom: 40px;
+      }
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="container">
-  <h1>Gallery</h1>
-  <p style="text-align:center;color:var(--muted)">Click images to enlarge • Slideshow available</p>
-
-  <!-- FILTER BUTTONS -->
-  <div class="filters">
-    <button onclick="filterImages('all')" class="active">All</button>
-    <button onclick="filterImages('events')">Events</button>
-    <button onclick="filterImages('awards')">Awards</button>
-    <button onclick="filterImages('teaching')">Teaching</button>
-    <button onclick="filterImages('campus')">Campus</button>
+  <!-- ─── HERO ────────────────────────────────────────── -->
+  <div class="hero">
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">🌙</button>
+    <div class="hero-inner">
+      <a href="index.html" class="back-btn" aria-label="Back to home">←</a>
+      <div>
+        <h1 class="hero-title">Media Gallery</h1>
+        <p class="hero-sub">Events · Awards · Teaching · Campus</p>
+      </div>
+    </div>
   </div>
 
-  <!-- GALLERY GRID -->
-  <div class="gallery-grid" id="galleryGrid"></div>
+  <!-- ─── FILTER CHIPS ─────────────────────────────────── -->
+  <div class="filters-wrap">
+    <div class="filters" id="filterRow">
+      <button class="filter-btn active" data-cat="all" onclick="filterImages('all', this)">All</button>
+      <button class="filter-btn" data-cat="events" onclick="filterImages('events', this)">📅 Events</button>
+      <button class="filter-btn" data-cat="awards" data-cat="awards" onclick="filterImages('awards', this)">🏆 Awards</button>
+      <button class="filter-btn" data-cat="teaching" onclick="filterImages('teaching', this)">🎓 Teaching</button>
+      <button class="filter-btn" data-cat="campus" onclick="filterImages('campus', this)">🏫 Campus</button>
+    </div>
+  </div>
 
-  <!-- BACK BUTTON -->
-  <center>
-    <a href="index.html" class="back-btn">← Back to Home</a>
-  </center>
-</div>
+  <div class="desktop-grid">
+    <!-- Desktop Sidebar -->
+    <aside class="desktop-sidebar">
+      <div class="card sidebar-card">
+        <button class="sidebar-theme-btn theme-toggle-btn" aria-label="Toggle theme">🌙</button>
+        
+        <div class="sidebar-header">
+          <img src="profile-new.jpeg" alt="Dr. Illapu Sankara Srinivasa Rao" class="sidebar-avatar">
+          <h2 class="sidebar-name">Dr. Illapu Sankara Srinivasa Rao</h2>
+          <p class="sidebar-role">Professor · Mentor · Researcher</p>
+          <div class="sidebar-badges">
+            <span class="badge">📍 Visakhapatnam</span>
+            <span class="badge">🎓 Ph.D CSE</span>
+            <span class="badge">⭐ GATE Expert</span>
+          </div>
+        </div>
+        
+        <div class="sidebar-divider"></div>
+        
+        <div style="margin-bottom: 12px;">
+          <a href="index.html" class="btn btn-outline" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;">
+            ← Back to Portfolio
+          </a>
+        </div>
+        
+        <div class="sidebar-divider"></div>
+        
+        <nav class="desktop-nav">
+          <button class="desktop-nav-item active" data-cat="all" onclick="filterImages('all', this)">
+            <span class="nav-icon">🖼️</span> All Categories
+          </button>
+          <button class="desktop-nav-item" data-cat="events" onclick="filterImages('events', this)">
+            <span class="nav-icon">📅</span> Events
+          </button>
+          <button class="desktop-nav-item" data-cat="awards" onclick="filterImages('awards', this)">
+            <span class="nav-icon">🏆</span> Awards
+          </button>
+          <button class="desktop-nav-item" data-cat="teaching" onclick="filterImages('teaching', this)">
+            <span class="nav-icon">🎓</span> Teaching
+          </button>
+          <button class="desktop-nav-item" data-cat="campus" onclick="filterImages('campus', this)">
+            <span class="nav-icon">🏫</span> Campus
+          </button>
+        </nav>
+      </div>
+    </aside>
 
-<!-- LIGHTBOX -->
-<div id="lightbox">
-  <span id="closeBtn">&times;</span>
-  <span id="prevBtn">&#10094;</span>
-  <img id="lightboxImg" src="">
-  <span id="nextBtn">&#10095;</span>
-  <div id="slideBtn" onclick="toggleSlide()">Start Slideshow</div>
-</div>
+    <!-- Desktop Main Content -->
+    <main class="desktop-main">
+      <div class="sec-head" style="padding-top: 0; margin-bottom: 16px;">
+        <h2>Media Gallery</h2>
+        <div class="sec-head-line"></div>
+      </div>
+      
+      <!-- ─── COUNT ────────────────────────────────────────── -->
+      <p class="count-badge" id="countBadge"></p>
 
-<script>
-/* --------------------------------
-   GALLERY IMAGE LIST
------------------------------------ */
-let GALLERY = [
-    { src: "gallery/img1.jpg", cat: "events" },
-  { src: "gallery/img2.jpg", cat: "awards" },
-  { src: "gallery/img3.jpg", cat: "teaching" },
-  { src: "gallery/img4.jpg", cat: "campus" },
-  { src: "gallery/img5.jpg", cat: "events" },
-  { src: "gallery/img6.jpg", cat: "teaching" },
-  { src: "gallery/img7.jpg", cat: "events" },
-  { src: "gallery/img8.jpg", cat: "awards" },
-  { src: "gallery/img9.jpg", cat: "teaching" },
-  { src: "gallery/img10.jpg", cat: "campus" },
-  { src: "gallery/img11.jpg", cat: "events" },
-  { src: "gallery/img11.jpg", cat: "teaching" }
-];
+      <!-- ─── GALLERY GRID ──────────────────────────────────── -->
+      <div class="gallery-wrap">
+        <div class="gallery-grid" id="galleryGrid"></div>
+      </div>
 
-// Render function
-function loadGallery(list) {
-  const grid = document.getElementById("galleryGrid");
-  grid.innerHTML = "";
-  list.forEach((img, i) => {
-    const div = document.createElement("div");
-    div.className = "gallery-item";
-    div.innerHTML = `<img src="${img.src}" data-index="${i}">`;
-    div.onclick = () => openLightbox(i);
-    grid.appendChild(div);
-  });
-}
+      <!-- ─── FOOTER ────────────────────────────────────────── -->
+      <footer>
+        © <span id="year"></span> Dr. Illapu Sankara Srinivasa Rao — All Rights Reserved.
+      </footer>
+    </main>
+  </div>
 
-loadGallery(GALLERY);
+  <!-- ─── LIGHTBOX ──────────────────────────────────────── -->
+  <div id="lightbox" role="dialog" aria-label="Image viewer">
+    <span class="lb-close" id="closeBtn" aria-label="Close">✕</span>
+    <img id="lightboxImg" src="" alt="Gallery image">
+    <p class="lb-cat" id="lbCat"></p>
+    <div class="lb-controls">
+      <span class="lb-btn" id="prevBtn" aria-label="Previous">‹</span>
+      <span class="lb-counter" id="lbCounter"></span>
+      <span class="lb-btn" id="nextBtn" aria-label="Next">›</span>
+    </div>
+    <button class="lb-slide-btn" id="slideBtn" onclick="toggleSlide()">▶ Slideshow</button>
+  </div>
 
-/* --------------------------------
-     FILTER FUNCTION
------------------------------------ */
-function filterImages(cat) {
-  document.querySelectorAll(".filters button")
-          .forEach(btn => btn.classList.remove("active"));
-  event.target.classList.add("active");
+  <script>
+    // ─── DATA ─────────────────────────────────────────────
+    const GALLERY = [
+      { src: "gallery/img1.jpg",  cat: "events"   },
+      { src: "gallery/img2.jpg",  cat: "awards"   },
+      { src: "gallery/img3.jpg",  cat: "teaching" },
+      { src: "gallery/img4.jpg",  cat: "campus"   },
+      { src: "gallery/img5.jpg",  cat: "events"   },
+      { src: "gallery/img6.jpg",  cat: "teaching" },
+      { src: "gallery/img7.jpg",  cat: "events"   },
+      { src: "gallery/img8.jpg",  cat: "awards"   },
+      { src: "gallery/img9.jpg",  cat: "teaching" },
+      { src: "gallery/img10.jpg", cat: "campus"   },
+      { src: "gallery/img11.jpg", cat: "events"   },
+      { src: "gallery/img11.jpg", cat: "teaching" },
+    ];
 
-  if (cat === "all") loadGallery(GALLERY);
-  else loadGallery(GALLERY.filter(x => x.cat === cat));
-}
+    const CAT_LABELS = { events: "Events", awards: "Awards", teaching: "Teaching", campus: "Campus" };
 
-/* --------------------------------
-     LIGHTBOX + SLIDESHOW
------------------------------------ */
-let currentIndex = 0;
-let slideshowInterval = null;
+    let activeList = [...GALLERY];
+    let currentIndex = 0;
+    let slideshowInterval = null;
 
-function openLightbox(index) {
-  currentIndex = index;
-  document.getElementById("lightboxImg").src = GALLERY[index].src;
-  document.getElementById("lightbox").style.display = "flex";
-}
+    // ─── LOAD GRID ────────────────────────────────────────
+    function loadGallery(list) {
+      activeList = list;
+      const grid = document.getElementById("galleryGrid");
+      const countEl = document.getElementById("countBadge");
+      grid.innerHTML = "";
+      countEl.textContent = `${list.length} photo${list.length !== 1 ? "s" : ""}`;
 
-document.getElementById("closeBtn").onclick = closeLightbox;
-function closeLightbox() {
-  document.getElementById("lightbox").style.display = "none";
-  stopSlide();
-}
+      if (list.length === 0) {
+        grid.innerHTML = `<div class="empty-state"><div class="empty-icon">📷</div><p>No photos in this category</p></div>`;
+        return;
+      }
 
-document.getElementById("prevBtn").onclick = () => changeImg(-1);
-document.getElementById("nextBtn").onclick = () => changeImg(1);
+      list.forEach((img, idx) => {
+        const label = CAT_LABELS[img.cat] || img.cat;
+        const div = document.createElement("div");
+        div.className = "gallery-item";
+        div.setAttribute("role", "button");
+        div.setAttribute("aria-label", `View ${label} photo`);
+        div.innerHTML = `
+          <img src="${img.src}" alt="${label} photo" loading="lazy">
+          <span class="cat-tag">${label}</span>
+          <div class="item-overlay"><span class="overlay-expand">⤢</span></div>
+        `;
+        div.onclick = () => openLightbox(idx);
+        grid.appendChild(div);
+      });
+    }
 
-function changeImg(step) {
-  currentIndex = (currentIndex + step + GALLERY.length) % GALLERY.length;
-  openLightbox(currentIndex);
-}
+    loadGallery(GALLERY);
 
-function toggleSlide() {
-  if (slideshowInterval === null) startSlide();
-  else stopSlide();
-}
+    // ─── FILTER ───────────────────────────────────────────
+    function filterImages(cat, btn) {
+      document.querySelectorAll(".filter-btn, .desktop-nav-item").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(`[data-cat="${cat}"]`).forEach(b => b.classList.add("active"));
+      loadGallery(cat === "all" ? GALLERY : GALLERY.filter(x => x.cat === cat));
+    }
 
-function startSlide() {
-  slideshowInterval = setInterval(() => changeImg(1), 2000);
-  document.getElementById("slideBtn").innerText = "Stop Slideshow";
-}
+    // ─── LIGHTBOX ─────────────────────────────────────────
+    function openLightbox(idx) {
+      currentIndex = idx;
+      updateLightbox();
+      document.getElementById("lightbox").classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
 
-function stopSlide() {
-  clearInterval(slideshowInterval);
-  slideshowInterval = null;
-  document.getElementById("slideBtn").innerText = "Start Slideshow";
-}
-</script>
+    function closeLightbox() {
+      document.getElementById("lightbox").classList.remove("open");
+      document.body.style.overflow = "";
+      stopSlide();
+    }
 
+    function updateLightbox() {
+      const img = activeList[currentIndex];
+      document.getElementById("lightboxImg").src = img.src;
+      document.getElementById("lbCat").textContent = CAT_LABELS[img.cat] || img.cat;
+      document.getElementById("lbCounter").textContent = `${currentIndex + 1} / ${activeList.length}`;
+    }
+
+    function changeImg(step) {
+      if (!activeList.length) return;
+      currentIndex = (currentIndex + step + activeList.length) % activeList.length;
+      updateLightbox();
+    }
+
+    document.getElementById("closeBtn").onclick = closeLightbox;
+    document.getElementById("prevBtn").onclick  = e => { e.stopPropagation(); changeImg(-1); };
+    document.getElementById("nextBtn").onclick  = e => { e.stopPropagation(); changeImg(1); };
+
+    document.getElementById("lightbox").addEventListener("click", e => {
+      if (e.target === document.getElementById("lightbox")) closeLightbox();
+    });
+
+    // ─── SLIDESHOW ────────────────────────────────────────
+    function toggleSlide() {
+      if (slideshowInterval) stopSlide();
+      else startSlide();
+    }
+    function startSlide() {
+      slideshowInterval = setInterval(() => changeImg(1), 2500);
+      document.getElementById("slideBtn").textContent = "⏹ Stop";
+    }
+    function stopSlide() {
+      clearInterval(slideshowInterval);
+      slideshowInterval = null;
+      document.getElementById("slideBtn").textContent = "▶ Slideshow";
+    }
+
+    // ─── SWIPE SUPPORT ────────────────────────────────────
+    let swipeStartX = 0;
+    document.getElementById("lightbox").addEventListener("touchstart", e => {
+      swipeStartX = e.changedTouches[0].clientX;
+    }, { passive: true });
+    document.getElementById("lightbox").addEventListener("touchend", e => {
+      const dx = e.changedTouches[0].clientX - swipeStartX;
+      if (Math.abs(dx) > 50) changeImg(dx < 0 ? 1 : -1);
+    });
+
+    // ─── KEYBOARD ─────────────────────────────────────────
+    document.addEventListener("keydown", e => {
+      if (!document.getElementById("lightbox").classList.contains("open")) return;
+      if (e.key === "ArrowRight") changeImg(1);
+      if (e.key === "ArrowLeft")  changeImg(-1);
+      if (e.key === "Escape")     closeLightbox();
+    });
+
+    // ─── THEME ───────────────────────────────────────────
+    const root = document.documentElement;
+    function applyTheme(t) {
+      root.setAttribute("data-theme", t);
+      localStorage.setItem("issr_theme", t);
+      document.querySelectorAll('#themeBtn, .theme-toggle-btn').forEach(btn => {
+        btn.textContent = t === 'dark' ? '☀️' : '🌙';
+      });
+    }
+    applyTheme(localStorage.getItem("issr_theme") || "light");
+    document.querySelectorAll('#themeBtn, .theme-toggle-btn').forEach(btn => {
+      btn.addEventListener("click", () => {
+        applyTheme(root.getAttribute("data-theme") === "dark" ? "light" : "dark");
+      });
+    });
+
+    // ─── FOOTER YEAR ──────────────────────────────────────
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
-
